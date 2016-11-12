@@ -11,5 +11,3 @@ dependencies:
 test:
   override:
     - ./gradlew build
-    - cp ./*/build/outputs/apk/*.apk $CIRCLE_ARTIFACTS/
-    - cp ./*/build/test-results/freeDebug/*.xml $CIRCLE_TEST_REPORTS/
