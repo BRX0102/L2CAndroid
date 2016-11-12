@@ -99,12 +99,14 @@ public class Login extends AppCompatActivity {
                                 Object locationName = getLocation.get("name");
                                 //Log.d("check1n", level.toString());
 
-                                /*///testing JSON call
+                                ///testing JSON call
                                 String fName = object.getString("name");
-                                Log.d("sweg", fName);*/
+                                Log.d("LOGIN", fName);
 
                                 User theUser = (User) getApplicationContext();
                                 theUser.setUserId(object.getInt("id"));
+
+                                Log.d("LOGINUSER", theUser.getfName());
                                 theUser.setfName(object.getString("first_name"));
                                 theUser.setlName(object.getString("last_name"));
                                 theUser.setUserLocation(locationName.toString());
@@ -128,7 +130,7 @@ public class Login extends AppCompatActivity {
             //Log.d("TAG", bundle2string(parameters));
 
             ////////COMMENTED CHANGE INTENT TO TEST LOGIN///////////////////////
-            Intent toUpdate = new Intent(Login.this, TempLogout.class);
+            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
             startActivity(toUpdate);
         }
 
@@ -158,7 +160,7 @@ public class Login extends AppCompatActivity {
 
 
         if(profile != null){
-            Intent toUpdate = new Intent(Login.this, TempLogout.class);
+            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
             startActivity(toUpdate);
         }
 

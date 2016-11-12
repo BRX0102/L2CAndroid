@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
 /**
  * Created by BRX01 on 11/11/2016.
  */
 
 public class UpdateProfile extends AppCompatActivity implements View.OnClickListener {
+    EditText firstNameUpdate;
+    EditText lastNameUpdate;
+
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -18,6 +22,9 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
+        User theUser = (User) getApplicationContext();
+        firstNameUpdate = (EditText)findViewById(R.id.editTextFirstNameUpdate);
+        firstNameUpdate.setText(theUser.getfName());
     }
 
     @Override
