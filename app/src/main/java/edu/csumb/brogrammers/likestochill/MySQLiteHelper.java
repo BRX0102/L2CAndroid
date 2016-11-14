@@ -41,6 +41,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private static final String KEY_LASTNAME = "lastname";
     private static final String KEY_EMAIL = "email";
 
+    private static final String[] COLUMNS = {KEY_ID,KEY_FIRSTNAME,KEY_LASTNAME,KEY_EMAIL};
+
     // Database Version
     private static final int DATABASE_VERSION = 9;
 
