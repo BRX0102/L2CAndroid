@@ -75,7 +75,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 "first_name TEXT, " +
                 "last_name TEXT, " +
                 "email TEXT, " +
-                "dob TEXT, ";
+                "dob TEXT)";
 
         // execute an SQL statement to create the table
         db.execSQL(CREATE_USER_TABLE);
