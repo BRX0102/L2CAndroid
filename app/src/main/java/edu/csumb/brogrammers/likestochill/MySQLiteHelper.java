@@ -36,9 +36,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private static final String TABLE_USER = "user";
 
     // Column names of User table
+    private static final String KEY_ID = "id";
     private static final String KEY_FIRSTNAME = "firstname";
     private static final String KEY_LASTNAME = "lastname";
-    private static final String KEY_EMAIL = "place";
+    private static final String KEY_EMAIL = "email";
 
     // Database Version
     private static final int DATABASE_VERSION = 9;
@@ -94,6 +95,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
         //Create ContentValues to add key column/value
         ContentValues values = new ContentValues();
+        values.put(KEY_ID, user.getUserId());
         values.put(KEY_FIRSTNAME, user.getfName());
         values.put(KEY_LASTNAME, user.getlName());
         values.put(KEY_EMAIL, user.getUserEmail());
@@ -103,5 +105,28 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 values); // key/value -> keys = column names/ values = column values
 
         db.close();
+    }
+
+    public int updateUser(User user){
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put("id", user.getUserId());
+        values.put("firstname", user.getfName()); // get firstname
+        values.put("lastname", user.getlName()); // get lastname
+        values.put("email", user.getUserEmail()); // get email
+
+        // 3. updating row
+        int i = db.update(TABLE_USER, //table
+                values, // column/value
+                KEY_ID+" = ?", // selections
+                new String[] { String.valueOf(user.getUserId()) }); //selection args
+
+        // 4. close
+        db.close();
+
+        return i;
     }
 }
