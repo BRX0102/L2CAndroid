@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroFitTestUserClass extends AppCompatActivity {
 
-    String BASE_URL = "http://likestochill.heidyzqyc2.us-west-2.elasticbeanstalk.com/webapi";
+    /*String BASE_URL = "http://likestochill.heidyzqyc2.us-west-2.elasticbeanstalk.com/webapi";
 
     public void testRetroFit(){
 
@@ -43,6 +43,6 @@ public class RetroFitTestUserClass extends AppCompatActivity {
                          }
         });
 
-    }
+    }*/
 
 }
