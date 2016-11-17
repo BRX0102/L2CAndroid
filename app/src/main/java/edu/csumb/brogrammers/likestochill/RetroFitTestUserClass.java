@@ -30,18 +30,18 @@ public class RetroFitTestUserClass extends AppCompatActivity {
 
         User user = new User();
 
-        Call<User> call = service.createUser(user);
-        call.enqueue(new Callback<User>() {
-                         @Override
-                         public void onResponse(Call<User> call, Response<User> response) {
-
-                         }
-
-                         @Override
-                         public void onFailure(Call<User> call, Throwable t) {
-
-                         }
-        });
+//        Call<User> call = service.createUser(user);
+//        call.enqueue(new Callback<User>() {
+//                         @Override
+//                         public void onResponse(Call<User> call, Response<User> response) {
+//
+//                         }
+//
+//                         @Override
+//                         public void onFailure(Call<User> call, Throwable t) {
+//
+//                         }
+//        });
 
     }*/
 
