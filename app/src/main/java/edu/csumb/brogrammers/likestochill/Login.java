@@ -105,17 +105,16 @@ public class Login extends AppCompatActivity {
 
                                 ///testing JSON call
 
-                                TestingDeleteThis.thisUser = new User(
-                                        object.getInt("id"),
-                                        object.getString("first_name"),
-                                        object.getString("last_name"),
-                                        locationName.toString(),
-                                        object.getString("email"),
-                                        object.getString("gender"),
-                                        object.getString("birthday"),
-                                        object.getString("about"));
-                                mTextView = (TextView)findViewById(R.id.textView4);
-                                mTextView.setText(object.getString("first_name"));
+//                                local db insert here
+//                                        object.getInt("id"),
+//                                        object.getString("first_name"),
+//                                        object.getString("last_name"),
+//                                        locationName.toString(),
+//                                        object.getString("email"),
+//                                        object.getString("gender"),
+//                                        object.getString("birthday"),
+//                                        object.getString("about"));
+//
 
 
 
