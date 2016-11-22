@@ -2,6 +2,8 @@ package edu.csumb.brogrammers.likestochill;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import edu.csumb.brogrammers.likestochill.User;
@@ -18,18 +20,18 @@ import retrofit2.http.Path;
  * Created by Peter on 11/16/2016.
  */
 
-public class RetroFitRest extends AppCompatActivity {
+public class RetroFitUser {
 
-
-
-    public interface RestService {
-        @POST("/users/new")
-        Call<User> createUser(@Body User user);
-    }
-
-
-
-
-
-
+//    @SerializedName("id")
+//    int mId;
+//
+//    @SerializedName("name")
+//    String mName;
+//
+//    public RetroFitUser(int id, String name ) {
+//        this.mId = id;
+//        this.mName = name;
+//    }
 }
+
+
