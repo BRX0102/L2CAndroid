@@ -47,6 +47,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SearchForMovies"
+            android:label="Add Movies to Like Bucket"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SearchForMovies"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".MainActivity"
             android:label="Time to Chill"
             android:screenOrientation="portrait">

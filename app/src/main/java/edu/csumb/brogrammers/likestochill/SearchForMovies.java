@@ -4,12 +4,16 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +28,7 @@ import java.net.URL;
  */
 
 public class SearchForMovies extends AppCompatActivity implements OnClickListener{
-    Button submitTitleBtn, submitIdBtn;
+    Button submitTitleBtn, submitIdBtn, likeBtn;
     TextView textViewOmdbResponse;
     EditText editTextMovieName, editTextMovieId;
     String url;
@@ -37,8 +41,14 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
         submitTitleBtn = (Button) findViewById(R.id.submitTitleBtn);
         submitTitleBtn.setOnClickListener(this);
+
         submitIdBtn = (Button) findViewById(R.id.submitIdBtn);
         submitIdBtn.setOnClickListener(this);
+
+        likeBtn = (Button) findViewById(R.id.likeBtn);
+        likeBtn.setVisibility(View.INVISIBLE);
+        likeBtn.setOnClickListener(this);
+
         textViewOmdbResponse = (TextView) findViewById(R.id.textViewOmdbResponse);
         editTextMovieName = (EditText) findViewById(R.id.editTextMovieName);
         editTextMovieId = (EditText) findViewById(R.id.editTextMovieId);
@@ -50,6 +60,15 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.likeBtn){
+            String liked = "Liked";
+            textViewOmdbResponse.setText(liked);
+            likeBtn.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+
         if (v.getId() == R.id.submitTitleBtn)
             url = "http://www.omdbapi.com/?t=" + editTextMovieName.getText().toString() + "&type=movie&y=&plot=short&r=json";
         else if(v.getId() == R.id.submitIdBtn)
@@ -91,7 +110,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+                    Log.d("Response: ", "> " + line);
 
                 }
 
@@ -118,12 +137,35 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(String jsonResult) {
+            super.onPostExecute(jsonResult);
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            textViewOmdbResponse.setText(result);
+            String title = "";
+            String year = "";
+            String plot = "";
+            String imdbId = "";
+            try {
+                JSONObject jObject = new JSONObject(jsonResult);
+                title = jObject.getString("Title");
+                year = jObject.getString("Year");
+                plot = jObject.getString("Plot");
+                imdbId = jObject.getString("imdbID");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+            //textViewOmdbResponse.setText(jsonResult);
+            textViewOmdbResponse.setText(Html.fromHtml("<b>" + "Title: " + "</b>" + title + "<p><b>"
+                    + "Year: " + "</b>" + year + "<p><b>" + "Plot: " + "</b>" + plot));
+
+
+            likeBtn.setVisibility(View.VISIBLE);
+
+
         }
     }
 }
