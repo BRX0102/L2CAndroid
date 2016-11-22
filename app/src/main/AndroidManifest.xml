@@ -17,8 +17,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.Login"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,6 +51,18 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MainActivity"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RetroFitTestUserClass">
+            <intent-filter>
+                <action android:name="android.intent.action.RetroFitTestUserClass"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".TestingDeleteThis">
+            <intent-filter>
+                <action android:name="android.intent.action.TestingDeleteThis"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

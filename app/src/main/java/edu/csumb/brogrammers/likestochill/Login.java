@@ -19,6 +19,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ public class Login extends AppCompatActivity {
     AccessToken accessToken;
     private CallbackManager mCallbackManager;
     Button button3;
+    TextView mTextView;
 
         /*@Override
         public boolean onTouchEvent(MotionEvent event) {
@@ -93,6 +95,8 @@ public class Login extends AppCompatActivity {
                             // Application code
                             Log.d("response", String.valueOf(object));
 
+
+
                             try {
 
                                 JSONObject getLocation = object.getJSONObject("location");
@@ -100,20 +104,19 @@ public class Login extends AppCompatActivity {
                                 //Log.d("check1n", level.toString());
 
                                 ///testing JSON call
-                                String fName = object.getString("name");
-                                Log.d("LOGIN", fName);
 
-                                User theUser = (User) getApplicationContext();
-                                theUser.setUserId(object.getInt("id"));
+                                TestingDeleteThis.thisUser = new User(
+                                        object.getInt("id"),
+                                        object.getString("first_name"),
+                                        object.getString("last_name"),
+                                        locationName.toString(),
+                                        object.getString("email"),
+                                        object.getString("gender"),
+                                        object.getString("birthday"),
+                                        object.getString("about"));
+                                mTextView = (TextView)findViewById(R.id.textView4);
+                                mTextView.setText(object.getString("first_name"));
 
-                                Log.d("LOGINUSER", theUser.getfName());
-                                theUser.setfName(object.getString("first_name"));
-                                theUser.setlName(object.getString("last_name"));
-                                theUser.setUserLocation(locationName.toString());
-                                theUser.setUserEmail(object.getString("email"));
-                                theUser.setUserGender(object.getString("gender"));
-                                theUser.setUserDOB(object.getString("birthday"));
-                                theUser.setUserAbout(object.getString("about"));
 
 
                             } catch (JSONException e) {
@@ -130,8 +133,8 @@ public class Login extends AppCompatActivity {
             //Log.d("TAG", bundle2string(parameters));
 
             ////////COMMENTED CHANGE INTENT TO TEST LOGIN///////////////////////
-            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
-            startActivity(toUpdate);
+//            Intent toUpdate = new Intent(Login.this, TestingDeleteThis.class);
+//            startActivity(toUpdate);
         }
 
         @Override
@@ -159,10 +162,10 @@ public class Login extends AppCompatActivity {
         displayWelcomeMessage(profile);
 
 
-        if(profile != null){
-            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
-            startActivity(toUpdate);
-        }
+//        if(profile != null){
+//            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
+//            startActivity(toUpdate);
+//        }
 
 
             /*Intent toUpdate = new Intent(Login.this, TempLogout.class);
