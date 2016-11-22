@@ -37,11 +37,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
     // Column names of User table
     private static final String KEY_ID = "id";
-    private static final String KEY_FIRSTNAME = "firstname";
-    private static final String KEY_LASTNAME = "lastname";
+    private static final String KEY_USERID = "user_id";
+    private static final String KEY_FIRSTNAME = "first_name";
+    private static final String KEY_LASTNAME = "last_name";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_DOB = "dob";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_FIRSTNAME,KEY_LASTNAME,KEY_EMAIL};
+    private static final String[] COLUMNS = {KEY_USERID,KEY_FIRSTNAME,KEY_LASTNAME,KEY_EMAIL,KEY_DOB};
 
     // Database Version
     private static final int DATABASE_VERSION = 9;
@@ -71,11 +73,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         Log.d(TAG, "INSIDE SQLite");
 
         // SQL statement to create a table called "locations"
-        String CREATE_USER_TABLE = "CREATE TABLE user ( " +
-                "first_name TEXT, " +
-                "last_name TEXT, " +
-                "email TEXT, " +
-                "dob TEXT)";
+        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER +"(" +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_USERID + " INTEGER, " +
+                KEY_FIRSTNAME + " TEXT, " +
+                KEY_LASTNAME + " TEXT, " +
+                KEY_EMAIL+ " TEXT, " +
+                KEY_DOB + " TEXT )";
 
         // execute an SQL statement to create the table
         db.execSQL(CREATE_USER_TABLE);
@@ -97,10 +101,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
         //Create ContentValues to add key column/value
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, user.getUserId());
+        values.put(KEY_USERID, user.getUserId());
         values.put(KEY_FIRSTNAME, user.getfName());
         values.put(KEY_LASTNAME, user.getlName());
         values.put(KEY_EMAIL, user.getUserEmail());
+        values.put(KEY_DOB, user.getUserDOB());
 
         db.insert(TABLE_USER, //table
                 null, //nullColumnHack
@@ -109,21 +114,54 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         db.close();
     }
 
+    public User getUser(int user_id){
+        // 1. get reference to readable DB
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2. build query
+        Cursor cursor =
+                db.query(TABLE_USER, // a. table
+                        COLUMNS, // b. column names
+                        "user_id = ?", // c. selections
+                        new String[] { String.valueOf(user_id) }, // d. selections args
+                        null, // e. group by
+                        null, // f. having
+                        null, // g. order by
+                        null); // h. limit
+
+        // 3. if we got results get the first one
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // 4. build book object
+        User user = new User();
+        user.setUserId(Integer.parseInt(cursor.getString(0)));
+        user.setfName(cursor.getString(1));
+        user.setlName(cursor.getString(2));
+        user.setUserEmail(cursor.getString(3));
+        user.setUserDOB(cursor.getString(4));
+
+        Log.d("getUser("+user_id+")", user.toString());
+
+        // 5. return book
+        return user;
+    }
+
     public int updateUser(User user){
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put("id", user.getUserId());
-        values.put("firstname", user.getfName()); // get firstname
-        values.put("lastname", user.getlName()); // get lastname
-        values.put("email", user.getUserEmail()); // get email
+        values.put(KEY_USERID, user.getUserId());
+        values.put(KEY_FIRSTNAME, user.getfName()); // get firstname
+        values.put(KEY_LASTNAME, user.getlName()); // get lastname
+        values.put(KEY_EMAIL, user.getUserEmail()); // get email
 
         // 3. updating row
         int i = db.update(TABLE_USER, //table
                 values, // column/value
-                KEY_ID+" = ?", // selections
+                KEY_USERID+" = ?", // selections
                 new String[] { String.valueOf(user.getUserId()) }); //selection args
 
         // 4. close

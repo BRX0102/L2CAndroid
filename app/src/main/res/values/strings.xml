@@ -3,6 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="submit">Submit</string>
 
     <string name="action_settings">Settings</string>
 
@@ -10,4 +11,30 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Settings Strings-->
+    <string name="goToPreferencesButton">Preferences</string>
+    <string name="name">Name: </string>
+    <string name="dummyName">FIRST LAST</string>
+    <string name="dummyGender">Unicorn</string>
+    <string name="dummyAge">30</string>
+    <string name="dummyBio">I am such an amazing person I can\'t believe it. Good people. Good times. Right on. I am such an amazing person I can\'t believe it. Good people. Good times. Right on. I am such an amazing person I can\'t believe it. Good people. Good times. Right on. </string>
+
+    <!--Search Preferences Strings-->
+    <string name="genderPreferences">Gender Preference</string>
+    <string-array name="genderArrayPreferences">
+        <item>Male</item>
+        <item>Female</item>
+        <item>All</item>
+    </string-array>
+
+    <string name="ageMinPreferences">Minimum Age</string>
+    <string name="ageMinHintPreferences">18-122</string>
+
+    <string name="ageMaxPreferences">Maximum Age</string>
+    <string name="ageMaxHintPreferences">18-122</string>
+
+    <string name="distancePreferences">Maximum Distance</string>
+    <string name="distanceHintPreferences">5</string>
+    <string name="distanceInMilesPreferences">Miles</string>
 </resources>
