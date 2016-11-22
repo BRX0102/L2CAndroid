@@ -27,12 +27,14 @@ public class MyDbHelperTest extends AndroidTestCase {
         super.tearDown();
     }
 
+    @Test
     public void testOpeningDb() throws Exception {
         assertNotNull(db);
         SQLiteDatabase sqliteDb = db.getWritableDatabase();
         assertNotNull(sqliteDb);
     }
 
+    @Test
     public void testWriteToDb() throws Exception{
         assertNotNull(db);
 //        db.getWritableDatabase();
@@ -43,6 +45,7 @@ public class MyDbHelperTest extends AndroidTestCase {
         assertEquals("Brian",tempUser.getfName());
     }
 
+    @Test
     public void updateUser() throws Exception{
         User testUser = new User(1234, "Brian", "Rono", "93955", "brono@csumb.edu", "Male",
                 "04/16/1991", "Brian is perfect");

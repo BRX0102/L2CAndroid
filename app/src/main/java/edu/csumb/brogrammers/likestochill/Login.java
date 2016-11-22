@@ -117,7 +117,7 @@ public class Login extends AppCompatActivity {
 
 
                             } catch (JSONException e) {
-
+                                Log.d("LOGINERROR", e.toString());
                                 // Do something to recover ... or kill the app.
                             }
                         }
