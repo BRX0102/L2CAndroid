@@ -18,10 +18,7 @@ import retrofit2.http.Path;
  * Created by Peter on 11/16/2016.
  */
 
-public class RetroFitRest extends AppCompatActivity {
-
-
-
+public class RetroFitUser extends AppCompatActivity {
     public interface RestService {
         @POST("/users/new")
         Call<User> createUser(@Body User user);
