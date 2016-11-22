@@ -1,6 +1,7 @@
 package edu.csumb.brogrammers.likestochill;
 
 import android.app.Application;
+import android.util.Log;
 
 /**
  * Created by BRX01 on 11/11/2016.
@@ -21,6 +22,7 @@ public class User extends Application {
 
 
 
+
     public User() {
 
     }
@@ -37,13 +39,13 @@ public class User extends Application {
         this.userGender = userGender;
         this.userDOB = userDOB;
         this.userAbout = userAbout;
-//        Log.d("nub", fName);
-//        Log.d("nub", lName);
-//        Log.d("nub", userLocation);
-//        Log.d("nub", userEmail);
-//        Log.d("nub", userGender);
-//        Log.d("nub", userDOB);
-//        Log.d("nub", userAbout);
+        Log.d("nub", fName);
+        Log.d("nub", lName);
+        Log.d("nub", userLocation);
+        Log.d("nub", userEmail);
+        Log.d("nub", userGender);
+        Log.d("nub", userDOB);
+        Log.d("nub", userAbout);
 
     }
 
