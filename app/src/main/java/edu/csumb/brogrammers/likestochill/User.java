@@ -39,13 +39,13 @@ public class User extends Application {
         this.userGender = userGender;
         this.userDOB = userDOB;
         this.userAbout = userAbout;
-//        Log.d("nub", fName);
-//        Log.d("nub", lName);
-//        Log.d("nub", userLocation);
-//        Log.d("nub", userEmail);
-//        Log.d("nub", userGender);
-//        Log.d("nub", userDOB);
-//        Log.d("nub", userAbout);
+        Log.d("nub", fName);
+        Log.d("nub", lName);
+        Log.d("nub", userLocation);
+        Log.d("nub", userEmail);
+        Log.d("nub", userGender);
+        Log.d("nub", userDOB);
+        Log.d("nub", userAbout);
 
     }
 
