@@ -22,16 +22,16 @@ import retrofit2.http.Path;
 
 public class RetroFitUser {
 
-    @SerializedName("id")
-    int mId;
-
-    @SerializedName("name")
-    String mName;
-
-    public RetroFitUser(int id, String name ) {
-        this.mId = id;
-        this.mName = name;
-    }
+//    @SerializedName("id")
+//    int mId;
+//
+//    @SerializedName("name")
+//    String mName;
+//
+//    public RetroFitUser(int id, String name ) {
+//        this.mId = id;
+//        this.mName = name;
+//    }
 }
 
 
