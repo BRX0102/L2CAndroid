@@ -13,14 +13,14 @@ public class userTest {
     private User userTest;
     @Before
     public void create(){
-        userTest = new User(1, "Sean", "O'Fallon", "93955", "sofallon@csumb.edu", "M", "2016-10-27", "About Sean");
+        userTest = new User("1", "Sean", "O'Fallon", "93955", "sofallon@csumb.edu", "M", "2016-10-27", "About Sean");
     }
 
     @Test
     public void getUserId() throws Exception {
         Boolean idIs1 = false;
         try{
-            if(userTest.getUserId() == 1)
+            if(userTest.getUserId().equals("1"))
             {
                 idIs1=true;
             }
@@ -35,8 +35,8 @@ public class userTest {
     public void setUserId() throws Exception {
         Boolean idIs100 = false;
         try{
-            userTest.setUserId(100);
-            if(userTest.getUserId() == 100)
+            userTest.setUserId("100");
+            if(userTest.getUserId().equals("100"))
             {
                 idIs100=true;
             }
