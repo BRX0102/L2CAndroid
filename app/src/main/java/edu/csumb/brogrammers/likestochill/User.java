@@ -8,7 +8,7 @@ import android.util.Log;
  */
 
 public class User extends Application {
-    private int userId;
+    private String userId;
 
     private String fName;
     private String lName;
@@ -27,7 +27,7 @@ public class User extends Application {
 
     }
 
-    public User(int userId, String fName, String lName, String userLocation, String userEmail, String userGender,
+    public User(String userId, String fName, String lName, String userLocation, String userEmail, String userGender,
                 String userDOB, String userAbout) {
         super();
 
@@ -39,21 +39,21 @@ public class User extends Application {
         this.userGender = userGender;
         this.userDOB = userDOB;
         this.userAbout = userAbout;
-        Log.d("nub", fName);
-        Log.d("nub", lName);
-        Log.d("nub", userLocation);
-        Log.d("nub", userEmail);
-        Log.d("nub", userGender);
-        Log.d("nub", userDOB);
-        Log.d("nub", userAbout);
+//        Log.d("nub", fName);
+//        Log.d("nub", lName);
+//        Log.d("nub", userLocation);
+//        Log.d("nub", userEmail);
+//        Log.d("nub", userGender);
+//        Log.d("nub", userDOB);
+//        Log.d("nub", userAbout);
 
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

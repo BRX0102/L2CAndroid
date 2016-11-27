@@ -38,26 +38,26 @@ public class MyDbHelperTest extends AndroidTestCase {
     public void testWriteToDb() throws Exception{
         assertNotNull(db);
 //        db.getWritableDatabase();
-        User testUser = new User(1234, "Brian", "Rono", "93955", "brono@csumb.edu", "Male",
+        User testUser = new User("1234", "Brian", "Rono", "93955", "brono@csumb.edu", "Male",
                 "04/16/1991", "Brian is perfect");
         db.addUser(testUser);
-        User tempUser = db.getUser(1234);
+        User tempUser = db.getUser("1234");
         assertEquals("Brian",tempUser.getfName());
     }
 
     @Test
     public void updateUser() throws Exception{
-        User testUser = new User(1234, "Brian", "Rono", "93955", "brono@csumb.edu", "Male",
+        User testUser = new User("1234", "Brian", "Rono", "93955", "brono@csumb.edu", "Male",
                 "04/16/1991", "Brian is perfect");
         db.addUser(testUser);
-        User tempUser = db.getUser(1234);
+        User tempUser = db.getUser("1234");
         assertEquals("Brian",tempUser.getfName());
 
-        testUser = new User(1234, "Arash", "Aria", "93955", "brono@csumb.edu", "Male",
+        testUser = new User("1234", "Arash", "Aria", "93955", "brono@csumb.edu", "Male",
                 "04/16/1991", "Brian is perfect");
 
         db.updateUser(testUser);
-        tempUser = db.getUser(1234);
+        tempUser = db.getUser("1234");
         assertEquals("Arash",tempUser.getfName());
     }
 }

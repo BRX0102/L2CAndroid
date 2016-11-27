@@ -40,10 +40,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private static final String KEY_USERID = "user_id";
     private static final String KEY_FIRSTNAME = "first_name";
     private static final String KEY_LASTNAME = "last_name";
+    private static final String KEY_LOCATION = "location";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_GENDER = "gender";
     private static final String KEY_DOB = "dob";
+    private static final String KEY_ABOUT = "about";
 
-    private static final String[] COLUMNS = {KEY_USERID,KEY_FIRSTNAME,KEY_LASTNAME,KEY_EMAIL,KEY_DOB};
+    private static final String[] COLUMNS = {KEY_USERID,KEY_FIRSTNAME,KEY_LASTNAME,KEY_LOCATION,KEY_EMAIL,KEY_GENDER,KEY_DOB,KEY_ABOUT};
 
     // Database Version
     private static final int DATABASE_VERSION = 9;
@@ -73,13 +76,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         Log.d(TAG, "INSIDE SQLite");
 
         // SQL statement to create a table called "locations"
-        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER +"(" +
+        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER +" ( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                KEY_USERID + " INTEGER, " +
+                KEY_USERID + " TEXT, " +
                 KEY_FIRSTNAME + " TEXT, " +
                 KEY_LASTNAME + " TEXT, " +
-                KEY_EMAIL+ " TEXT, " +
-                KEY_DOB + " TEXT )";
+                KEY_LOCATION + " TEXT, " +
+                KEY_EMAIL + " TEXT, " +
+                KEY_GENDER + " TEXT, " +
+                KEY_DOB + " TEXT, "+
+                KEY_ABOUT + " TEXT )";
 
         // execute an SQL statement to create the table
         db.execSQL(CREATE_USER_TABLE);
@@ -104,8 +110,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_USERID, user.getUserId());
         values.put(KEY_FIRSTNAME, user.getfName());
         values.put(KEY_LASTNAME, user.getlName());
+        values.put(KEY_LOCATION, user.getUserLocation());
         values.put(KEY_EMAIL, user.getUserEmail());
+        values.put(KEY_GENDER, user.getUserGender());
         values.put(KEY_DOB, user.getUserDOB());
+        values.put(KEY_ABOUT, user.getUserAbout());
 
         db.insert(TABLE_USER, //table
                 null, //nullColumnHack
@@ -114,7 +123,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    public User getUser(int user_id){
+    public User getUser(String user_id){
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -123,7 +132,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 db.query(TABLE_USER, // a. table
                         COLUMNS, // b. column names
                         "user_id = ?", // c. selections
-                        new String[] { String.valueOf(user_id) }, // d. selections args
+                        new String[] { user_id }, // d. selections args
                         null, // e. group by
                         null, // f. having
                         null, // g. order by
@@ -135,11 +144,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
         // 4. build book object
         User user = new User();
-        user.setUserId(Integer.parseInt(cursor.getString(0)));
         user.setfName(cursor.getString(1));
         user.setlName(cursor.getString(2));
-        user.setUserEmail(cursor.getString(3));
-        user.setUserDOB(cursor.getString(4));
+        user.setUserLocation(cursor.getString(3));
+        user.setUserEmail(cursor.getString(4));
+        user.setUserGender(cursor.getString(5));
+        user.setUserDOB(cursor.getString(6));
+        user.setUserAbout(cursor.getString(7));
 
         Log.d("getUser("+user_id+")", user.toString());
 
@@ -162,7 +173,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         int i = db.update(TABLE_USER, //table
                 values, // column/value
                 KEY_USERID+" = ?", // selections
-                new String[] { String.valueOf(user.getUserId()) }); //selection args
+                new String[] { user.getUserId() }); //selection args
 
         // 4. close
         db.close();

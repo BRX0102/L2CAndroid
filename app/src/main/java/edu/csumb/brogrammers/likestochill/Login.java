@@ -2,6 +2,7 @@ package edu.csumb.brogrammers.likestochill;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class Login extends AppCompatActivity {
     LoginButton loginButton;
     AccessToken accessToken;
     private CallbackManager mCallbackManager;
+    private MySQLiteHelper db;
     Button button3;
     TextView mTextView;
 
@@ -98,25 +100,24 @@ public class Login extends AppCompatActivity {
 
 
                             try {
-
+                                db = MySQLiteHelper.getInstance(getApplicationContext());
                                 JSONObject getLocation = object.getJSONObject("location");
                                 Object locationName = getLocation.get("name");
                                 //Log.d("check1n", level.toString());
-
                                 ///testing JSON call
-
 //                                local db insert here
-//                                        object.getInt("id"),
-//                                        object.getString("first_name"),
-//                                        object.getString("last_name"),
-//                                        locationName.toString(),
-//                                        object.getString("email"),
-//                                        object.getString("gender"),
-//                                        object.getString("birthday"),
-//                                        object.getString("about"));
+                                User user = new User(
+                                        object.getString("id"),
+                                        object.getString("first_name"),
+                                        object.getString("last_name"),
+                                        "93955",
+                                        object.getString("email"),
+                                        object.getString("gender"),
+                                        "01/01/1991",
+                                        "About Bio");
+
+                                db.addUser(user);
 //
-
-
 
                             } catch (JSONException e) {
                                 Log.d("LOGINERROR", e.toString());
@@ -132,8 +133,8 @@ public class Login extends AppCompatActivity {
             //Log.d("TAG", bundle2string(parameters));
 
             ////////COMMENTED CHANGE INTENT TO TEST LOGIN///////////////////////
-//            Intent toUpdate = new Intent(Login.this, TestingDeleteThis.class);
-//            startActivity(toUpdate);
+            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
+            startActivity(toUpdate);
         }
 
         @Override
