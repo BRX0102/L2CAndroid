@@ -43,6 +43,7 @@ public class TempLogout extends AppCompatActivity {
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
+        this.finish();
     }
 
     private void displayWelcomeMessage(Profile profile){
