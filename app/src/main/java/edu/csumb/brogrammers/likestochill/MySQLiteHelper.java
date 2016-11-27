@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -14,6 +16,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import android.util.Log;
 /**
  * Created by BRX01 on 11/13/2016.
@@ -24,6 +27,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private SQLiteDatabase database;
     private final Context context;
     private String DATABASE_PATH;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
 
 
     // Log TAG for debugging purpose
@@ -36,7 +40,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private static final String TABLE_USER = "user";
 
     // Column names of User table
-    private static final String KEY_ID = "id";
+//    private static final String KEY_ID = "id";
     private static final String KEY_USERID = "user_id";
     private static final String KEY_FIRSTNAME = "first_name";
     private static final String KEY_LASTNAME = "last_name";
@@ -77,14 +81,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
         // SQL statement to create a table called "locations"
         String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER +" ( " +
-                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_USERID + " TEXT, " +
                 KEY_FIRSTNAME + " TEXT, " +
                 KEY_LASTNAME + " TEXT, " +
-                KEY_LOCATION + " TEXT, " +
+                KEY_LOCATION + " INTEGER, " +
                 KEY_EMAIL + " TEXT, " +
                 KEY_GENDER + " TEXT, " +
-                KEY_DOB + " TEXT, "+
+                KEY_DOB + " DATE, "+
                 KEY_ABOUT + " TEXT )";
 
         // execute an SQL statement to create the table
@@ -110,7 +113,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_USERID, user.getUserId());
         values.put(KEY_FIRSTNAME, user.getfName());
         values.put(KEY_LASTNAME, user.getlName());
-        values.put(KEY_LOCATION, user.getUserLocation());
+        values.put(KEY_LOCATION, Integer.parseInt(user.getUserLocation()));
         values.put(KEY_EMAIL, user.getUserEmail());
         values.put(KEY_GENDER, user.getUserGender());
         values.put(KEY_DOB, user.getUserDOB());
@@ -167,7 +170,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_USERID, user.getUserId());
         values.put(KEY_FIRSTNAME, user.getfName()); // get firstname
         values.put(KEY_LASTNAME, user.getlName()); // get lastname
+        values.put(KEY_LOCATION, user.getUserLocation()); // get location
         values.put(KEY_EMAIL, user.getUserEmail()); // get email
+        values.put(KEY_GENDER, user.getUserGender()); // get gender
+        values.put(KEY_ABOUT, user.getUserAbout()); // get about
 
         // 3. updating row
         int i = db.update(TABLE_USER, //table

@@ -58,7 +58,11 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         emailUpdate.setText(user.getUserEmail());
 
         rg = (RadioGroup)findViewById(R.id.radioGenderUpdate);
-        rg.check(R.id.radioMale);
+        if(user.getUserGender().equalsIgnoreCase("male")){
+            rg.check(R.id.radioMale);
+        }else{
+            rg.check(R.id.radioFemale);
+        }
 
         dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
         dobUpdate.setText(user.getUserDOB());
@@ -94,8 +98,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             db.updateUser(updateUser);
 
 //            Move to the main activity
-            Intent toMain = new Intent(this, MainActivity.class);
-            startActivity(toMain);
+            Intent toSettings = new Intent(this, Settings.class);
+            startActivity(toSettings);
             this.finish();
         }
     }
