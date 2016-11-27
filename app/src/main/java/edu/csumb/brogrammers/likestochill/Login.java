@@ -100,9 +100,10 @@ public class Login extends AppCompatActivity {
 
 
                             try {
+
                                 db = MySQLiteHelper.getInstance(getApplicationContext());
-                                JSONObject getLocation = object.getJSONObject("location");
-                                Object locationName = getLocation.get("name");
+//                                JSONObject getLocation = object.getJSONObject("location");
+//                                Object locationName = getLocation.get("name");
                                 //Log.d("check1n", level.toString());
                                 ///testing JSON call
 //                                local db insert here
@@ -117,6 +118,14 @@ public class Login extends AppCompatActivity {
                                         "About Bio");
 
                                 db.addUser(user);
+
+                                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("pref", getApplicationContext().MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("user_id", object.getString("id"));
+                                editor.apply();
+
+                                Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
+                                startActivity(toUpdate);
 //
 
                             } catch (JSONException e) {
@@ -133,8 +142,7 @@ public class Login extends AppCompatActivity {
             //Log.d("TAG", bundle2string(parameters));
 
             ////////COMMENTED CHANGE INTENT TO TEST LOGIN///////////////////////
-            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
-            startActivity(toUpdate);
+
         }
 
         @Override

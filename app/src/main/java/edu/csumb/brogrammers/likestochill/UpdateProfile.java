@@ -22,6 +22,7 @@ import com.facebook.Profile;
 public class UpdateProfile extends AppCompatActivity implements View.OnClickListener {
     EditText firstNameUpdate, lastNameUpdate, locationUpdate, emailUpdate, dobUpdate, aboutUpdate;
     RadioGroup rg;
+    String user_id;
     private MySQLiteHelper db;
 
 
@@ -33,7 +34,12 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         Profile profile = Profile.getCurrentProfile();
-
+        if(profile.getId()==null){
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("pref", getApplicationContext().MODE_PRIVATE);
+            user_id = sharedPref.getString("user_id", "DEFAULT");
+        }else{
+            user_id = profile.getId();
+        }
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
@@ -50,6 +56,9 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
         emailUpdate = (EditText)findViewById(R.id.editTextEmailUpdate);
         emailUpdate.setText(user.getUserEmail());
+
+        rg = (RadioGroup)findViewById(R.id.radioGenderUpdate);
+        rg.check(R.id.radioMale);
 
         dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
         dobUpdate.setText(user.getUserDOB());
@@ -72,11 +81,10 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             lastNameUpdate = (EditText)findViewById(R.id.editTextLastNameUpdate);
             locationUpdate = (EditText)findViewById(R.id.editTextlocationUpdate);
             emailUpdate = (EditText)findViewById(R.id.editTextEmailUpdate);
-            dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
-            aboutUpdate = (EditText)findViewById(R.id.editTextAboutUpdate);
-
             rg = (RadioGroup)findViewById(R.id.radioGenderUpdate);
             String gender = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+            dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
+            aboutUpdate = (EditText)findViewById(R.id.editTextAboutUpdate);
 
             User updateUser = new User(profile.getId(), firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
                     locationUpdate.getText().toString(), emailUpdate.getText().toString(), gender,
@@ -88,6 +96,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 //            Move to the main activity
             Intent toMain = new Intent(this, MainActivity.class);
             startActivity(toMain);
+            this.finish();
         }
     }
 }

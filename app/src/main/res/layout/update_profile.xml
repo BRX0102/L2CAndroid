@@ -34,8 +34,7 @@
         android:hint="First Name"
         android:ems="10"
         android:textSize="20sp"
-        android:id="@+id/editTextFirstNameUpdate"
-        android:editable="false"/>
+        android:id="@+id/editTextFirstNameUpdate" />
 
     <TextView
         android:layout_width="match_parent"
@@ -54,7 +53,7 @@
         android:ems="10"
         android:textSize="20sp"
         android:id="@+id/editTextLastNameUpdate"
-        android:editable="false"/>
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -91,7 +90,6 @@
         android:hint="Example@email.swag"
         android:ems="10"
         android:textSize="20sp"
-        android:editable="false"
         android:id="@+id/editTextEmailUpdate"/>
 
 
@@ -139,7 +137,6 @@
         android:inputType="text"
         android:ems="20"
         android:hint="5/20/1969"
-        android:editable="false"
         android:id="@+id/editTextDOBUpdate"
         />
 
