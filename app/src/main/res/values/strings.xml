@@ -15,7 +15,8 @@
     <!--Settings Strings-->
     <string name="goToPreferencesButton">Preferences</string>
     <string name="name">Name: </string>
-    <string name="dummyName">FIRST LAST</string>
+    <string name="dummyFirstName">FIRST</string>
+    <string name="dummyLastName">LAST</string>
     <string name="dummyGender">Unicorn</string>
     <string name="dummyAge">30</string>
     <string name="dummyBio">I am such an amazing person I can\'t believe it. Good people. Good times. Right on. I am such an amazing person I can\'t believe it. Good people. Good times. Right on. I am such an amazing person I can\'t believe it. Good people. Good times. Right on. </string>
