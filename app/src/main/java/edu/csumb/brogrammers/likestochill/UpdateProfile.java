@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
@@ -81,32 +82,39 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.updateNextButton){
+            try {
 //            Send the data to the local database
-            db = MySQLiteHelper.getInstance(getApplicationContext());
+                db = MySQLiteHelper.getInstance(getApplicationContext());
 
-            FacebookSdk.sdkInitialize(getApplicationContext());
-            Profile profile = Profile.getCurrentProfile();
+                FacebookSdk.sdkInitialize(getApplicationContext());
+                Profile profile = Profile.getCurrentProfile();
 
-            firstNameUpdate = (EditText)findViewById(R.id.editTextFirstNameUpdate);
-            lastNameUpdate = (EditText)findViewById(R.id.editTextLastNameUpdate);
-            locationUpdate = (EditText)findViewById(R.id.editTextlocationUpdate);
-            emailUpdate = (EditText)findViewById(R.id.editTextEmailUpdate);
-            rg = (RadioGroup)findViewById(R.id.radioGenderUpdate);
-            String gender = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-            dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
-            aboutUpdate = (EditText)findViewById(R.id.editTextAboutUpdate);
+                firstNameUpdate = (EditText) findViewById(R.id.editTextFirstNameUpdate);
+                lastNameUpdate = (EditText) findViewById(R.id.editTextLastNameUpdate);
+                locationUpdate = (EditText) findViewById(R.id.editTextlocationUpdate);
+                emailUpdate = (EditText) findViewById(R.id.editTextEmailUpdate);
+                rg = (RadioGroup) findViewById(R.id.radioGenderUpdate);
+                String gender = ((RadioButton) findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                dobUpdate = (EditText) findViewById(R.id.editTextDOBUpdate);
+                aboutUpdate = (EditText) findViewById(R.id.editTextAboutUpdate);
 
-            User updateUser = new User(profile.getId(), firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
-                    locationUpdate.getText().toString(), emailUpdate.getText().toString(), gender,
-                    dobUpdate.getText().toString(), aboutUpdate.getText().toString());
+                User updateUser = new User(profile.getId(), firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
+                        locationUpdate.getText().toString(), emailUpdate.getText().toString(), gender,
+                        dobUpdate.getText().toString(), aboutUpdate.getText().toString());
 
 
-            db.updateUser(updateUser);
+                db.updateUser(updateUser);
 
 //            Move to the main activity
-            Intent toSettings = new Intent(this, Settings.class);
-            startActivity(toSettings);
-            this.finish();
+                Intent toSettings = new Intent(this, Settings.class);
+                Bundle extras = new Bundle();
+                extras.putString("user_id", user_id);
+                toSettings.putExtras(extras);
+                startActivity(toSettings);
+                this.finish();
+            }catch(Exception e){
+                Toast.makeText(this, "Error in field!" + e, Toast.LENGTH_LONG);
+            }
         }
     }
 }

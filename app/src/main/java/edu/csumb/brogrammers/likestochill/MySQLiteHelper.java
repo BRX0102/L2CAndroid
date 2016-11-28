@@ -147,6 +147,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
         // 4. build book object
         User user = new User();
+        user.setUserId(user_id);
         user.setfName(cursor.getString(1));
         user.setlName(cursor.getString(2));
         user.setUserLocation(cursor.getString(3));
