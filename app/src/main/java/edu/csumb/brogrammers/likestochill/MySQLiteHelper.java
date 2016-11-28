@@ -87,7 +87,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 KEY_LOCATION + " INTEGER, " +
                 KEY_EMAIL + " TEXT, " +
                 KEY_GENDER + " TEXT, " +
-                KEY_DOB + " DATE, "+
+                KEY_DOB + " TEXT, "+
                 KEY_ABOUT + " TEXT )";
 
         // execute an SQL statement to create the table

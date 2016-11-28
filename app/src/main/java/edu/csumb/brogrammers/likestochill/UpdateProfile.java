@@ -52,7 +52,9 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         lastNameUpdate.setText(user.getlName());
 
         locationUpdate = (EditText)findViewById(R.id.editTextlocationUpdate);
-        locationUpdate.setText(user.getUserLocation());
+        if(!user.getUserLocation().equals("99999")){
+            locationUpdate.setText(user.getUserLocation());
+        }
 
         emailUpdate = (EditText)findViewById(R.id.editTextEmailUpdate);
         emailUpdate.setText(user.getUserEmail());
@@ -65,10 +67,14 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         }
 
         dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
-        dobUpdate.setText(user.getUserDOB());
+        if(!user.getUserDOB().equals("")){
+            dobUpdate.setText(user.getUserDOB());
+        }
 
         aboutUpdate = (EditText)findViewById(R.id.editTextAboutUpdate);
-        aboutUpdate.setText(user.getUserAbout());
+        if(!user.getUserAbout().equals("")){
+            aboutUpdate.setText(user.getUserAbout());
+        }
 
     }
 

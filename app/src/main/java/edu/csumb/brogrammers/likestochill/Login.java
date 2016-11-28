@@ -111,11 +111,11 @@ public class Login extends AppCompatActivity {
                                         object.getString("id"),
                                         object.getString("first_name"),
                                         object.getString("last_name"),
-                                        "93955",
+                                        "99999",
                                         object.getString("email"),
                                         object.getString("gender"),
-                                        "01/01/1991",
-                                        "About Bio");
+                                        "",
+                                        "");
 
                                 db.addUser(user);
 

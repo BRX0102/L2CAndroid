@@ -38,6 +38,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Settings"
+            android:label="Profile"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.Settings"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".TempLogout"
             android:label="Temp Logout"
             android:screenOrientation="portrait">
