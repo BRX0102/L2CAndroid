@@ -126,7 +126,7 @@ public class Login extends AppCompatActivity {
 
                                 Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
                                 startActivity(toUpdate);
-//
+
 
                             } catch (JSONException e) {
                                 Log.d("LOGINERROR", e.toString());
