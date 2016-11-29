@@ -174,6 +174,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_LOCATION, user.getUserLocation()); // get location
         values.put(KEY_EMAIL, user.getUserEmail()); // get email
         values.put(KEY_GENDER, user.getUserGender()); // get gender
+        values.put(KEY_DOB, user.getUserDOB()); // get DOB
         values.put(KEY_ABOUT, user.getUserAbout()); // get about
 
         // 3. updating row

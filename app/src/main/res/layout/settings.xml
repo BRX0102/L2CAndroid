@@ -36,8 +36,8 @@
             android:layout_weight="0.5"
             android:gravity="center">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
                 android:id="@+id/profileImage"
                 android:src="@drawable/likes2chilllogo"/>
             <ImageButton
