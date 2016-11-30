@@ -3,6 +3,7 @@ package edu.csumb.brogrammers.likestochill;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by BRX01 on 11/11/2016.
@@ -27,9 +39,16 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
     private MySQLiteHelper db;
 
 
+    okhttp3.OkHttpClient client = new OkHttpClient();
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+
+
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
+
+//        new JSONFeedArrayTask().execute();
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
 
@@ -79,6 +98,76 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
     }
 
+
+
+    public class PostTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+        Context context;
+
+        private PostTask(Context context) {
+            this.context = context.getApplicationContext();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+
+//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
+
+//                UserL2C newUser = new UserL2C("bill", "maher", "076766555", "i want to chill", "1999-11-11", "gggg@csumb.edu", "M", "95148");
+
+                UserL2C newUser = new UserL2C(db.getUser(user_id).getfName(),
+                                                db.getUser(user_id).getlName(),
+                                                    user_id, db.getUser(user_id).getUserAbout(),
+                                                        db.getUser(user_id).getUserDOB(),
+                                                            db.getUser(user_id).getUserEmail(), db.getUser(user_id).getUserGender(), db.getUser(user_id).getUserLocation());
+
+//                MyMovie newMovie = new MyMovie("dis dis","2");
+
+                Gson gson = new Gson();
+                String json = gson.toJson(newUser);
+
+                okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
+
+                okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/users/addUser")
+                        .post(body)
+                        .build();
+
+                okhttp3.Response response = client.newCall(request).execute();
+                return response.toString();
+
+
+
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
+
+
+            Intent toSettings = new Intent(context, Settings.class);
+            Bundle extras = new Bundle();
+            extras.putString("user_id", user_id);
+            toSettings.putExtras(extras);
+            startActivity(toSettings);
+            finish();
+
+        }
+
+
+
+    }
+
+
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.updateNextButton){
@@ -105,13 +194,20 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
                 db.updateUser(updateUser);
 
-//            Move to the main activity
-                Intent toSettings = new Intent(this, Settings.class);
-                Bundle extras = new Bundle();
-                extras.putString("user_id", user_id);
-                toSettings.putExtras(extras);
-                startActivity(toSettings);
-                this.finish();
+
+
+
+//                new JSONFeedArrayTask().execute();
+                new PostTask(this).execute();
+
+
+//                Move to the main activity
+//                Intent toSettings = new Intent(this, Settings.class);
+//                Bundle extras = new Bundle();
+//                extras.putString("user_id", user_id);
+//                toSettings.putExtras(extras);
+//                startActivity(toSettings);
+//                this.finish();
             }catch(Exception e){
                 Toast.makeText(this, "Error in field!" + e, Toast.LENGTH_LONG);
             }
