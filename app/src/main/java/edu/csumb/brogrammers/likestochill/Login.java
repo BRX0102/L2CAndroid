@@ -125,6 +125,7 @@ public class Login extends AppCompatActivity {
                                 editor.apply();
 
                                 Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
+                                toUpdate.putExtra("user_id", object.getString("id"));
                                 startActivity(toUpdate);
 
 

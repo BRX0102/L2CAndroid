@@ -52,19 +52,24 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        Profile profile = Profile.getCurrentProfile();
-        if(profile.getId()==null){
-            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("pref", getApplicationContext().MODE_PRIVATE);
-            user_id = sharedPref.getString("user_id", "DEFAULT");
+        if(getIntent().getExtras().getString("user_id")!=null) {
+            user_id = getIntent().getExtras().getString("user_id");
         }else{
-            user_id = profile.getId();
+            SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+            user_id = sharedPref.getString("user_id", "DEFAULT");
         }
+
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
 //        Show the user information
-        User user = db.getUser(profile.getId());
+        User user = db.getUser(user_id);
+
+        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("user_id", user_id);
+        editor.apply();
+
         firstNameUpdate = (EditText)findViewById(R.id.editTextFirstNameUpdate);
         firstNameUpdate.setText(user.getfName());
 
@@ -154,11 +159,11 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 
-            Intent toSettings = new Intent(context, Settings.class);
-            Bundle extras = new Bundle();
-            extras.putString("user_id", user_id);
-            toSettings.putExtras(extras);
-            startActivity(toSettings);
+            Intent toLikes = new Intent(context, Likes.class);
+//            Bundle extras = new Bundle();
+//            extras.putString("user_id", user_id);
+//            toLikes.putExtras(extras);
+            startActivity(toLikes);
             finish();
 
         }
