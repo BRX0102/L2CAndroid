@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +26,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Sean on 11/13/2016.
- */
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+
+
 
 public class SearchForMovies extends AppCompatActivity implements OnClickListener{
     Button submitTitleBtn, submitIdBtn, likeBtn;
@@ -33,6 +37,10 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
     EditText editTextMovieName, editTextMovieId;
     String url;
     ProgressDialog pd;
+
+    okhttp3.OkHttpClient client;
+
+    MediaType JSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
         if (v.getId() == R.id.likeBtn){
             String liked = "Liked";
+            new PostTask().execute();
             textViewOmdbResponse.setText(liked);
             likeBtn.setVisibility(View.INVISIBLE);
             return;
@@ -145,13 +154,11 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
             String title = "";
             String year = "";
             String plot = "";
-            String imdbId = "";
             try {
                 JSONObject jObject = new JSONObject(jsonResult);
                 title = jObject.getString("Title");
                 year = jObject.getString("Year");
                 plot = jObject.getString("Plot");
-                imdbId = jObject.getString("imdbID");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -167,5 +174,53 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
 
         }
+    }
+
+    public class PostTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+
+//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
+
+                //User newUser = new User("ppppppppppp", "kkkkkkkkkkkk", 10, "mmmmmmmmmmmmm", "1994-10-10", "uuuuuuuu@csumb.edu", "M", "2016 - 10 - 27");
+
+                //String UserId, String MovieTitle
+                Movie newMovie = new Movie("someMovie", "2");
+                Gson gson = new Gson();
+                String json = gson.toJson(newMovie);
+
+
+                client = new OkHttpClient();
+                okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
+                okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/addLike")
+                        .post(body)
+                        .build();
+                okhttp3.Response response = client.newCall(request).execute();
+                return response.toString();
+//                return "it is working";
+
+
+
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Toast.makeText(getApplicationContext(), "Likes Added", Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
+
     }
 }
