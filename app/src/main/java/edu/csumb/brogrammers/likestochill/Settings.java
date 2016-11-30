@@ -82,7 +82,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         firstNameSettings.setText(user.getfName());
 
         lastNameSettings = (TextView)findViewById(R.id.lastNameSettings);
-        lastNameSettings.setText(user.getlName());
+        lastNameSettings.setText(user.getlName().substring(0,1).toUpperCase());
 
 //        Set age
         dobSettings = (TextView)findViewById(R.id.ageSettings);
