@@ -171,10 +171,11 @@ public class Login extends AppCompatActivity {
         displayWelcomeMessage(profile);
 
 
-//        if(profile != null){
-//            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
-//            startActivity(toUpdate);
-//        }
+        if(profile != null){
+            Intent toMain = new Intent(Login.this, MainActivity.class);
+            startActivity(toMain);
+            this.finish();
+        }
 
 
             /*Intent toUpdate = new Intent(Login.this, TempLogout.class);
