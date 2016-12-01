@@ -51,8 +51,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 //        new JSONFeedArrayTask().execute();
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
-
-        if(getIntent().getExtras().getString("user_id")!=null) {
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
             user_id = getIntent().getExtras().getString("user_id");
         }else{
             SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -171,9 +171,6 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 //            Send the data to the local database
                 db = MySQLiteHelper.getInstance(getApplicationContext());
 
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                Profile profile = Profile.getCurrentProfile();
-
                 firstNameUpdate = (EditText) findViewById(R.id.editTextFirstNameUpdate);
                 lastNameUpdate = (EditText) findViewById(R.id.editTextLastNameUpdate);
                 locationUpdate = (EditText) findViewById(R.id.editTextlocationUpdate);
@@ -183,7 +180,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
                 dobUpdate = (EditText) findViewById(R.id.editTextDOBUpdate);
                 aboutUpdate = (EditText) findViewById(R.id.editTextAboutUpdate);
 
-                User updateUser = new User(profile.getId(), firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
+                User updateUser = new User(user_id, firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
                         locationUpdate.getText().toString(), emailUpdate.getText().toString(), gender,
                         dobUpdate.getText().toString(), aboutUpdate.getText().toString());
 
