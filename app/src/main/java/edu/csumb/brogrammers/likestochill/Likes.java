@@ -56,31 +56,32 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(this);
 
-        //user_id = getIntent().getStringExtra("user_id");
-        user_id = "1132758413445743";
+        user_id = getIntent().getStringExtra("user_id");
+        //user_id = "1132758413445743";
 
 
 
 
         listView = (ListView) findViewById(R.id.listView);
-        new GetMovies().execute();
-//        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
-//
-//        ListView listView = (ListView) findViewById(R.id.listView);
-//        listView.setAdapter(adapter);
-//
-//        listView.setOnItemClickListener(Likes.this);
 
+        //movies = getMovies();
+        new GetMovies().execute();
+
+        /*
+        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(Likes.this);
+*/
     }
 
 
-    /*public String[] getMovies() { // need another call to db here to populate listview
-
-
-
+    public String[] getMovies() { // need another call to db here to populate listview
 
         return new String[]{"1", "2", "3"};
-    }*/
+    }
 
 
     @Override
@@ -179,12 +180,12 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
     }
 
 
-    public class GetMovies extends AsyncTask<String, Void, String> {
+    public class GetMovies extends AsyncTask<String, Void, Movie[]> {
 
         private Exception exception;
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected Movie[] doInBackground(String... urls) {
             try {
                 okhttp3.OkHttpClient client = new OkHttpClient();
                 okhttp3.Request request = new Request.Builder()
@@ -194,26 +195,13 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
                 okhttp3.Response response = client.newCall(request).execute();
                 String result = response.body().string();
 
-
-
-
                 Gson gson = new Gson();
-
-
                 Type collectionType = new TypeToken<Collection<Movie>>() {}.getType();
                 Collection<Movie> movieListJson = gson.fromJson(result,collectionType);
                 Movie[] userListOBJ = movieListJson.toArray(new Movie[movieListJson.size()]);
 
-                movies[0] = userListOBJ[0].getMovieTitle();
-                movies[1] = userListOBJ[1].getMovieTitle();
 
-
-
-
-
-
-
-                return userListOBJ[1].getMovieTitle();
+                return userListOBJ;
 
 
             } catch (IOException ioe) {
@@ -224,15 +212,23 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(Movie[] s) {
             super.onPostExecute(s);
-            ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
+
+            Toast.makeText(getApplicationContext(), s[1].getMovieTitle(), Toast.LENGTH_SHORT).show();
+            String[] r = new String[s.length];
+
+            for (int i =0; i < s.length; i++){
+                r[i] = s[i].getMovieTitle();
+            }
+
+
+            ListAdapter adapter = new ArrayAdapter<String>(Likes.this, R.layout.likes_list_item, R.id.movieTxt, r);
 
             ListView listView = (ListView) findViewById(R.id.listView);
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(Likes.this);
-            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
         }
 
