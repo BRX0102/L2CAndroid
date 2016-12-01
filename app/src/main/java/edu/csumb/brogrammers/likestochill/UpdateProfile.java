@@ -101,8 +101,70 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             aboutUpdate.setText(user.getUserAbout());
         }
 
+        new getIfExists(this).execute();
+
     }
 
+    public class getIfExists extends AsyncTask<Void, Void, Boolean> {
+
+        private Exception exception;
+        Context context;
+
+        private getIfExists(Context context) {
+            this.context = context.getApplicationContext();
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            try {
+                okhttp3.OkHttpClient client = new OkHttpClient();
+                okhttp3.Request request = new Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/users/"+user_id)
+                        .build();
+
+                okhttp3.Response response = client.newCall(request).execute();
+                String result = response.body().string();
+
+                Gson gson = new Gson();
+
+                Type collectionType = new TypeToken<Collection<UserL2C>>() {}.getType();
+                Collection<UserL2C> userListJson = gson.fromJson(result,collectionType);
+                if (userListJson.size()>0){
+                    return true;
+                } else {
+                    return false;
+                }
+
+
+
+
+
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            return false;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+            super.onPostExecute(s);
+
+            if (s) {
+
+                Toast.makeText(getApplicationContext(), "Welcome back", Toast.LENGTH_SHORT).show();
+
+                Intent toLikes = new Intent(context, Likes.class);
+                startActivity(toLikes);
+                finish();
+
+            }
+
+
+        }
+    }
 
 
     public class PostTask extends AsyncTask<String, Void, String> {
@@ -149,7 +211,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 //            Move to the main activity
