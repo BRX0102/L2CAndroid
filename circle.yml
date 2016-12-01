@@ -12,7 +12,7 @@ test:
   override:
     - ./gradlew build test jacocoTestReport
     - cp ./*/build/outputs/apk/*.apk $CIRCLE_ARTIFACTS/
-    - cp ./*/build/test-results/testDebugUnitText/*.xml $CIRCLE_TEST_REPORTS/
+    - cp ./*/build/test-results/testDebugUnitTest/*.xml $CIRCLE_TEST_REPORTS/
     - cd ./*/build/;bash <(curl -s https://codecov.io/bash)
 notify:
   webhooks:
