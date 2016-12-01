@@ -117,18 +117,12 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         @Override
         protected String doInBackground(String... urls) {
             try {
-
-//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
-
-//                UserL2C newUser = new UserL2C("bill", "maher", "076766555", "i want to chill", "1999-11-11", "gggg@csumb.edu", "M", "95148");
-
                 UserL2C newUser = new UserL2C(db.getUser(user_id).getfName(),
                                                 db.getUser(user_id).getlName(),
                                                     user_id, db.getUser(user_id).getUserAbout(),
                                                         db.getUser(user_id).getUserDOB(),
                                                             db.getUser(user_id).getUserEmail(), db.getUser(user_id).getUserGender(), db.getUser(user_id).getUserLocation());
 
-//                MyMovie newMovie = new MyMovie("dis dis","2");
 
                 Gson gson = new Gson();
                 String json = gson.toJson(newUser);
@@ -158,11 +152,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
-
+//            Move to the main activity
             Intent toLikes = new Intent(context, Likes.class);
-//            Bundle extras = new Bundle();
-//            extras.putString("user_id", user_id);
-//            toLikes.putExtras(extras);
             startActivity(toLikes);
             finish();
 
@@ -199,20 +190,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
                 db.updateUser(updateUser);
 
-
-
-
-//                new JSONFeedArrayTask().execute();
                 new PostTask(this).execute();
 
-
-//                Move to the main activity
-//                Intent toSettings = new Intent(this, Settings.class);
-//                Bundle extras = new Bundle();
-//                extras.putString("user_id", user_id);
-//                toSettings.putExtras(extras);
-//                startActivity(toSettings);
-//                this.finish();
             }catch(Exception e){
                 Toast.makeText(this, "Error in field!" + e, Toast.LENGTH_LONG);
             }
