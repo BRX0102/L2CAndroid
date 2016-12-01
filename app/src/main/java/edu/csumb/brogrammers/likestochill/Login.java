@@ -41,20 +41,6 @@ public class Login extends AppCompatActivity {
     Button button3;
     TextView mTextView;
 
-        /*@Override
-        public boolean onTouchEvent(MotionEvent event) {
-            // MotionEvent object holds X-Y values
-            if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                String text = "You click at x = " + event.getX() + " and y = " + event.getY();
-                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-            }
-
-            return super.onTouchEvent(event);
-        }*/
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -83,8 +69,6 @@ public class Login extends AppCompatActivity {
             accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
 
-            //Log.d("hiya", profile.getName());
-
             displayWelcomeMessage(profile);
 
             GraphRequest request = GraphRequest.newMeRequest(
@@ -96,17 +80,9 @@ public class Login extends AppCompatActivity {
                                 GraphResponse response) {
                             // Application code
                             Log.d("response", String.valueOf(object));
-
-
-
                             try {
 
                                 db = MySQLiteHelper.getInstance(getApplicationContext());
-//                                JSONObject getLocation = object.getJSONObject("location");
-//                                Object locationName = getLocation.get("name");
-                                //Log.d("check1n", level.toString());
-                                ///testing JSON call
-//                                local db insert here
                                 User user = new User(
                                         object.getString("id"),
                                         object.getString("first_name"),
@@ -124,6 +100,7 @@ public class Login extends AppCompatActivity {
                                 editor.putString("user_id", object.getString("id"));
                                 editor.apply();
 
+
                                 Intent toUpdate = new Intent(Login.this, MainActivity.class);
                                 startActivity(toUpdate);
 
@@ -138,11 +115,6 @@ public class Login extends AppCompatActivity {
             parameters.putString("fields", "id, first_name, last_name, email, gender, hometown, birthday, about, location");
             request.setParameters(parameters);
             request.executeAsync();
-
-            //Log.d("TAG", bundle2string(parameters));
-
-            ////////COMMENTED CHANGE INTENT TO TEST LOGIN///////////////////////
-
         }
 
         @Override
@@ -169,16 +141,17 @@ public class Login extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         displayWelcomeMessage(profile);
 
-
-//        if(profile != null){
-//            Intent toUpdate = new Intent(Login.this, UpdateProfile.class);
-//            startActivity(toUpdate);
-//        }
+//        Intent to main if resuming
+        if(profile != null){
+            Intent toMain = new Intent(Login.this, MainActivity.class);
+            startActivity(toMain);
+            this.finish();
+        }
 
 
             /*Intent toUpdate = new Intent(Login.this, TempLogout.class);
             startActivity(toUpdate);*/
-//        Intent to main if resuming
+
 
     }
 

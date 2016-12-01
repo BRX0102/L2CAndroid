@@ -3,6 +3,7 @@ package edu.csumb.brogrammers.likestochill;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by BRX01 on 11/11/2016.
@@ -27,25 +39,37 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
     private MySQLiteHelper db;
 
 
+    okhttp3.OkHttpClient client = new OkHttpClient();
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+
+
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
 
-        db = MySQLiteHelper.getInstance(getApplicationContext());
+//        new JSONFeedArrayTask().execute();
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        Profile profile = Profile.getCurrentProfile();
-        if(profile.getId()==null){
-            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("pref", getApplicationContext().MODE_PRIVATE);
-            user_id = sharedPref.getString("user_id", "DEFAULT");
+        db = MySQLiteHelper.getInstance(getApplicationContext());
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            user_id = getIntent().getExtras().getString("user_id");
         }else{
-            user_id = profile.getId();
+            SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+            user_id = sharedPref.getString("user_id", "DEFAULT");
         }
+
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
 //        Show the user information
-        User user = db.getUser(profile.getId());
+        User user = db.getUser(user_id);
+
+        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("user_id", user_id);
+        editor.apply();
+
         firstNameUpdate = (EditText)findViewById(R.id.editTextFirstNameUpdate);
         firstNameUpdate.setText(user.getfName());
 
@@ -79,15 +103,73 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
     }
 
+
+
+    public class PostTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+        Context context;
+
+        private PostTask(Context context) {
+            this.context = context.getApplicationContext();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                UserL2C newUser = new UserL2C(db.getUser(user_id).getfName(),
+                                                db.getUser(user_id).getlName(),
+                                                    user_id, db.getUser(user_id).getUserAbout(),
+                                                        db.getUser(user_id).getUserDOB(),
+                                                            db.getUser(user_id).getUserEmail(), db.getUser(user_id).getUserGender(), db.getUser(user_id).getUserLocation());
+
+
+                Gson gson = new Gson();
+                String json = gson.toJson(newUser);
+
+                okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
+
+                okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/users/addUser")
+                        .post(body)
+                        .build();
+
+                okhttp3.Response response = client.newCall(request).execute();
+                return response.toString();
+
+
+
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
+
+//            Move to the main activity
+            Intent toLikes = new Intent(context, Likes.class);
+            startActivity(toLikes);
+            finish();
+
+        }
+
+
+
+    }
+
+
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.updateNextButton){
             try {
 //            Send the data to the local database
                 db = MySQLiteHelper.getInstance(getApplicationContext());
-
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                Profile profile = Profile.getCurrentProfile();
 
                 firstNameUpdate = (EditText) findViewById(R.id.editTextFirstNameUpdate);
                 lastNameUpdate = (EditText) findViewById(R.id.editTextLastNameUpdate);
@@ -98,20 +180,15 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
                 dobUpdate = (EditText) findViewById(R.id.editTextDOBUpdate);
                 aboutUpdate = (EditText) findViewById(R.id.editTextAboutUpdate);
 
-                User updateUser = new User(profile.getId(), firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
+                User updateUser = new User(user_id, firstNameUpdate.getText().toString(), lastNameUpdate.getText().toString(),
                         locationUpdate.getText().toString(), emailUpdate.getText().toString(), gender,
                         dobUpdate.getText().toString(), aboutUpdate.getText().toString());
 
 
                 db.updateUser(updateUser);
 
-//            Move to the main activity
-                Intent toSettings = new Intent(this, Settings.class);
-                Bundle extras = new Bundle();
-                extras.putString("user_id", user_id);
-                toSettings.putExtras(extras);
-                startActivity(toSettings);
-                this.finish();
+                new PostTask(this).execute();
+
             }catch(Exception e){
                 Toast.makeText(this, "Error in field!" + e, Toast.LENGTH_LONG);
             }

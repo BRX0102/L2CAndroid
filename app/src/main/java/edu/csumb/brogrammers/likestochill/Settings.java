@@ -1,5 +1,6 @@
 package edu.csumb.brogrammers.likestochill;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,19 +44,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
 
-        if(getIntent().hasExtra("user_id")){
-            user_id = getIntent().getExtras().getString("user_id");
-        }else{
+//        if(getIntent().hasExtra("user_id")){
+//            user_id = getIntent().getExtras().getString("user_id");
+//        }else{
 //            user_id="10154628186114814";
-            FacebookSdk.sdkInitialize(getApplicationContext());
-            Profile profile = Profile.getCurrentProfile();
-            if(profile.getId()==null){
-                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("pref", getApplicationContext().MODE_PRIVATE);
+//            FacebookSdk.sdkInitialize(getApplicationContext());
+//            Profile profile = Profile.getCurrentProfile();
+//            if(profile.getId()==null){
+                SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
                 user_id = sharedPref.getString("user_id", "DEFAULT");
-            }else{
-                user_id = profile.getId();
-            }
-        }
+//            }else{
+//                user_id = profile.getId();
+//            }
+//        }
 
         User user = db.getUser(user_id);
 
@@ -82,7 +83,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         firstNameSettings.setText(user.getfName());
 
         lastNameSettings = (TextView)findViewById(R.id.lastNameSettings);
-        lastNameSettings.setText(user.getlName());
+        lastNameSettings.setText(user.getlName().substring(0,1).toUpperCase());
 
 //        Set age
         dobSettings = (TextView)findViewById(R.id.ageSettings);

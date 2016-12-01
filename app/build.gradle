@@ -3,7 +3,7 @@ apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "edu.csumb.brogrammers.likestochill"
         minSdkVersion 18
