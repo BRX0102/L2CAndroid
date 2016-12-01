@@ -19,9 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /*
 *  frozen id: tt2294629
@@ -35,8 +41,12 @@ import okhttp3.OkHttpClient;
 public class Likes extends AppCompatActivity implements OnItemClickListener, View.OnClickListener{
 
     okhttp3.OkHttpClient client;
-    MediaType JSON;
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     Button addBtn;
+    String user_id;
+    String [] movies;
+    ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +56,31 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(this);
 
-        String [] movies = getMovies();
-        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
+        //user_id = getIntent().getStringExtra("user_id");
+        user_id = "1132758413445743";
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(Likes.this);
+
+
+        listView = (ListView) findViewById(R.id.listView);
+        new GetMovies().execute();
+//        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
+//
+//        ListView listView = (ListView) findViewById(R.id.listView);
+//        listView.setAdapter(adapter);
+//
+//        listView.setOnItemClickListener(Likes.this);
 
     }
 
 
-    public String[] getMovies() { // need another call to db here to populate listview
+    /*public String[] getMovies() { // need another call to db here to populate listview
 
-        // new GetMovies().execute();
 
-        return new String[]{"Barbie as the Island Princess", "frozen", "tangled"};
-    }
+
+
+        return new String[]{"1", "2", "3"};
+    }*/
 
 
     @Override
@@ -105,8 +123,11 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
 
     @Override
     public void onClick(View v) {
-        Intent toSearchForMovies = new Intent(this, SearchForMovies.class);
-        startActivity(toSearchForMovies);
+
+        Intent toSearch = new Intent(getBaseContext(), SearchForMovies.class);
+        toSearch.putExtra("user_id", user_id);
+        startActivity(toSearch);
+        //finish();
     }
 
     public class DeleteTask extends AsyncTask<String, Void, String> {
@@ -165,38 +186,53 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         @Override
         protected String doInBackground(String... urls) {
             try {
-
-//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
-
-                //User newUser = new User("ppppppppppp", "kkkkkkkkkkkk", 10, "mmmmmmmmmmmmm", "1994-10-10", "uuuuuuuu@csumb.edu", "M", "2016 - 10 - 27");
-
-                //String UserId, String MovieTitle
-                Movie newMovie = new Movie("1", "frozen");
-                Gson gson = new Gson();
-                String json = gson.toJson(newMovie);
-
-
-                client = new OkHttpClient();
-                okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
-                okhttp3.Request request = new okhttp3.Request.Builder()
-                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/deleteLike/")
-                        .delete()
+                okhttp3.OkHttpClient client = new OkHttpClient();
+                okhttp3.Request request = new Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/"+user_id)
                         .build();
+
                 okhttp3.Response response = client.newCall(request).execute();
-                return response.toString();
+                String result = response.body().string();
 
 
 
-            } catch (Exception e) {
-                this.exception = e;
-                return null;
+
+                Gson gson = new Gson();
+
+
+                Type collectionType = new TypeToken<Collection<Movie>>() {}.getType();
+                Collection<Movie> movieListJson = gson.fromJson(result,collectionType);
+                Movie[] userListOBJ = movieListJson.toArray(new Movie[movieListJson.size()]);
+
+                movies[0] = userListOBJ[0].getMovieTitle();
+                movies[1] = userListOBJ[1].getMovieTitle();
+
+
+
+
+
+
+
+                return userListOBJ[1].getMovieTitle();
+
+
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+
             }
+            return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
 
+            ListView listView = (ListView) findViewById(R.id.listView);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(Likes.this);
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
         }
 

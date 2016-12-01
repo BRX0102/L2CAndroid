@@ -35,17 +35,22 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
     Button submitTitleBtn, submitIdBtn, likeBtn;
     TextView textViewOmdbResponse;
     EditText editTextMovieName, editTextMovieId;
-    String url;
+    String url, title;
     ProgressDialog pd;
+
+    String user_id;
 
     okhttp3.OkHttpClient client;
 
-    MediaType JSON;
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_for_movies);
+
+        user_id = getIntent().getStringExtra("user_id");
+
 
         submitTitleBtn = (Button) findViewById(R.id.submitTitleBtn);
         submitTitleBtn.setOnClickListener(this);
@@ -151,7 +156,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            String title = "";
+
             String year = "";
             String plot = "";
             try {
@@ -184,12 +189,12 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         protected String doInBackground(String... urls) {
             try {
 
-//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
+                Movie newMovie = new Movie(title, user_id);
 
-                //User newUser = new User("ppppppppppp", "kkkkkkkkkkkk", 10, "mmmmmmmmmmmmm", "1994-10-10", "uuuuuuuu@csumb.edu", "M", "2016 - 10 - 27");
 
-                //String UserId, String MovieTitle
-                Movie newMovie = new Movie("someMovie", "2");
+
+
+
                 Gson gson = new Gson();
                 String json = gson.toJson(newMovie);
 
