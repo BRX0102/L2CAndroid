@@ -151,7 +151,7 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 //            Move to the main activity

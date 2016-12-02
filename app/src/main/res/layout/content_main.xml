@@ -13,10 +13,24 @@
     tools:context="edu.csumb.brogrammers.likestochill.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--&gt;-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/prev"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Previous View" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Next View" />
+    </LinearLayout>
 
     <!--</LinearLayout>-->
     <!--<LinearLayout-->

@@ -46,12 +46,21 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
         addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(this);
 
-        //SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-        //user_id = sharedPref.getString("user_id", "DEFAULT");
-        user_id = "1132758413445743";
+        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        user_id = sharedPref.getString("user_id", "DEFAULT");
+
 
         listView = (ListView) findViewById(R.id.listView);
         new GetMovies().execute();
+
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        new GetMovies().execute();
+
     }
 
     @Override
@@ -68,9 +77,8 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                new DeleteTask().execute();
 
-                Toast.makeText(ManageLikes.this, "removed", Toast.LENGTH_LONG).show();
+                new DeleteTask().execute();
 
                 dialog.dismiss();
             }
@@ -128,6 +136,8 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Toast.makeText(ManageLikes.this, "Like removed", Toast.LENGTH_LONG).show();
+            new GetMovies().execute();
 
         }
     }

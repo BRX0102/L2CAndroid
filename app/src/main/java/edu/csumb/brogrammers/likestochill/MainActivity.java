@@ -13,11 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ViewSwitcher;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private MySQLiteHelper db;
+    Button pre, nex;
+    ViewSwitcher view;
 
 
     @Override
@@ -27,16 +30,42 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        pre = (Button) findViewById(R.id.prev);
+        nex = (Button) findViewById(R.id.next);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        view = (ViewSwitcher) findViewById(R.id.viewSwitcher1);
+
+        pre.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View arg0) {
+
+                // Show Previous View
+                view.showPrevious();
+
             }
         });
+        nex.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                // Show Next View
+                view.showNext();
+            }
+        });
+
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,20 +115,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Intent toUpdate = new Intent(this, MainActivity.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_gallery) {
-            Intent toUpdate = new Intent(this, UpdateProfile.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-            Intent toUpdate = new Intent(this, SearchPreferences.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.home) {
+            Intent toHome = new Intent(this, MainActivity.class);
+            startActivity(toHome);
+            this.finish();
+        } else if (id == R.id.myProfile) {
+            Intent toProfile = new Intent(this, Settings.class);
+            startActivity(toProfile);
+            this.finish();
+        } else if (id == R.id.searchPreferences) {
+            Intent toSearch = new Intent(this, SearchPreferences.class);
+            startActivity(toSearch);
+            this.finish();
+        } else if (id == R.id.addLikes) {
+            Intent toLikes = new Intent(this, ManageLikes.class);
+            startActivity(toLikes);
+            this.finish();
 
         }
 

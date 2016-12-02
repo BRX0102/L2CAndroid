@@ -3,12 +3,14 @@ package edu.csumb.brogrammers.likestochill;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -21,9 +23,17 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by BRX01 on 11/11/2016.
@@ -63,11 +73,82 @@ public class Login extends AppCompatActivity {
     }
 
 
+    public class getIfExists extends AsyncTask<Void, Void, Boolean> {
+
+        private Exception exception;
+
+        String userId;
+
+        private getIfExists(String userId) {
+            this.userId = userId;
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            try {
+
+
+
+                okhttp3.OkHttpClient client = new OkHttpClient();
+                okhttp3.Request request = new Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/users/"+userId)
+                        .build();
+
+                okhttp3.Response response = client.newCall(request).execute();
+                String result = response.body().string();
+
+                Gson gson = new Gson();
+
+                Type collectionType = new TypeToken<Collection<UserL2C>>() {}.getType();
+                Collection<UserL2C> userListJson = gson.fromJson(result,collectionType);
+                if (userListJson.size()>0){
+                    return true;
+                } else {
+                    return false;
+                }
+
+
+
+
+
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            return false;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+            super.onPostExecute(s);
+
+            if (s) {
+
+                Toast.makeText(getApplicationContext(), "Welcome back", Toast.LENGTH_SHORT).show();
+
+                Intent toLikes = new Intent(Login.this, MainActivity.class);
+                startActivity(toLikes);
+
+
+            } else {
+
+                Intent toLikes = new Intent(Login.this, NewProfile.class);
+                startActivity(toLikes);
+
+            }
+
+
+        }
+    }
+
+
     private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
+            final Profile profile = Profile.getCurrentProfile();
 
             displayWelcomeMessage(profile);
 
@@ -101,8 +182,10 @@ public class Login extends AppCompatActivity {
                                 editor.apply();
 
 
-                                Intent toUpdate = new Intent(Login.this, MainActivity.class);
-                                startActivity(toUpdate);
+//                                Intent toUpdate = new Intent(Login.this, MainActivity.class);
+//                                startActivity(toUpdate);
+
+                                new getIfExists(object.getString("id")).execute();
 
 
                             } catch (JSONException e) {

@@ -8,6 +8,27 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <ViewSwitcher
+        android:id="@+id/viewSwitcher1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/chillicon" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/ic_launcher" />
+
+    </ViewSwitcher>
+
+
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

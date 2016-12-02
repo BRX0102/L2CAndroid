@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,12 +26,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class SearchForMovies extends AppCompatActivity implements OnClickListener{
     Button submitTitleBtn, likeBtn, backBtn;
@@ -66,9 +70,17 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
     }
 
     @Override
+    public void onBackPressed() {
+        Intent toManageLikes = new Intent(this, ManageLikes.class);
+        startActivity(toManageLikes);
+        finish();
+    }
+
+    @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.likeBtn){
+
             String liked = title + " added";
             new PostTask().execute();
             textViewOmdbResponse.setText(liked);
@@ -84,6 +96,9 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         else if (v.getId() == R.id.submitTitleBtn) {
             url = "http://www.omdbapi.com/?t=" + editTextMovieName.getText().toString() + "&type=movie&y=&plot=short&r=json";
             new JsonTask().execute(url);
+
+
+
         }
     }
 
@@ -160,7 +175,77 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
             textViewOmdbResponse.setText(Html.fromHtml("<b>" + "Title: " + "</b>" + title + "<p><b>"
                     + "Year: " + "</b>" + year + "<p><b>" + "Plot: " + "</b>" + plot));
 
-            likeBtn.setVisibility(View.VISIBLE);
+            new getIfExists(user_id,title).execute();
+
+
+
+
+        }
+    }
+
+    public class getIfExists extends AsyncTask<Void, Void, Boolean> {
+
+        private Exception exception;
+
+        String userId;
+        String movieTitle;
+
+        private getIfExists(String userId, String movieTitle) {
+            this.userId = userId;
+            this.movieTitle = movieTitle;
+
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            try {
+
+
+
+                okhttp3.OkHttpClient client = new OkHttpClient();
+                okhttp3.Request request = new Request.Builder()
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/"+userId)
+                        .build();
+
+                okhttp3.Response response = client.newCall(request).execute();
+                String result = response.body().string();
+
+                Gson gson = new Gson();
+
+                Type collectionType = new TypeToken<Collection<Movie>>() {}.getType();
+                Collection<Movie> userLikeListJson = gson.fromJson(result,collectionType);
+                Movie[] userMovieList = userLikeListJson.toArray(new Movie[userLikeListJson.size()]);
+
+                for (int i = 0; i < userMovieList.length; i++){
+                    if (userMovieList[i].getMovieTitle() == movieTitle) {
+                        return true;
+                    }
+                }
+                return false;
+
+
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            return false;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+            super.onPostExecute(s);
+
+            if (s) {
+
+                Toast.makeText(SearchForMovies.this, "Already liked", Toast.LENGTH_LONG).show();
+                likeBtn.setVisibility(View.INVISIBLE);
+
+            } else {
+                Toast.makeText(SearchForMovies.this, "You can like it", Toast.LENGTH_LONG).show();
+                likeBtn.setVisibility(View.VISIBLE);
+            }
         }
     }
 
