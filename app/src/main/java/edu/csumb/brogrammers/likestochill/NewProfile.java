@@ -155,7 +155,7 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 //            Move to the main activity
-            Intent toLikes = new Intent(context, Likes.class);
+            Intent toLikes = new Intent(context, ManageLikes.class);
             startActivity(toLikes);
             finish();
         }
