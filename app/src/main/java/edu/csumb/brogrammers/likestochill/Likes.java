@@ -215,7 +215,7 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         protected void onPostExecute(Movie[] s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(), s[1].getMovieTitle(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), s[1].getMovieTitle(), Toast.LENGTH_SHORT).show();
             String[] r = new String[s.length];
 
             for (int i =0; i < s.length; i++){
