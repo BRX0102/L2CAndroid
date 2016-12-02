@@ -38,6 +38,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".NewProfile"
+            android:label="Create Profile"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.NewProfile"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Settings"
             android:label="Your Profile"
             android:screenOrientation="portrait">

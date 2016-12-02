@@ -29,11 +29,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 /**
- * Created by BRX01 on 11/11/2016.
+ * Created by Brian on 12/1/2016.
  */
 
-public class UpdateProfile extends AppCompatActivity implements View.OnClickListener {
+public class NewProfile extends AppCompatActivity implements View.OnClickListener {
     EditText firstNameUpdate, lastNameUpdate, locationUpdate, emailUpdate, dobUpdate, aboutUpdate;
+    TextView createButton;
     RadioGroup rg;
     String user_id;
     private MySQLiteHelper db;
@@ -43,8 +44,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 
-
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
 
@@ -52,9 +52,9 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
         Bundle extras = getIntent().getExtras();
-        if(extras!=null) {
+        if (extras != null) {
             user_id = getIntent().getExtras().getString("user_id");
-        }else{
+        } else {
             SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
             user_id = sharedPref.getString("user_id", "DEFAULT");
         }
@@ -70,39 +70,42 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         editor.putString("user_id", user_id);
         editor.apply();
 
-        firstNameUpdate = (EditText)findViewById(R.id.editTextFirstNameUpdate);
+        String createText = "Create Profile";
+        createButton = (TextView)findViewById(R.id.updateNextButton);
+        createButton.setText(createText);
+
+        firstNameUpdate = (EditText) findViewById(R.id.editTextFirstNameUpdate);
         firstNameUpdate.setText(user.getfName());
 
-        lastNameUpdate = (EditText)findViewById(R.id.editTextLastNameUpdate);
+        lastNameUpdate = (EditText) findViewById(R.id.editTextLastNameUpdate);
         lastNameUpdate.setText(user.getlName());
 
-        locationUpdate = (EditText)findViewById(R.id.editTextlocationUpdate);
-        if(!user.getUserLocation().equals("99999")){
+        locationUpdate = (EditText) findViewById(R.id.editTextlocationUpdate);
+        if (!user.getUserLocation().equals("99999")) {
             locationUpdate.setText(user.getUserLocation());
         }
 
-        emailUpdate = (EditText)findViewById(R.id.editTextEmailUpdate);
+        emailUpdate = (EditText) findViewById(R.id.editTextEmailUpdate);
         emailUpdate.setText(user.getUserEmail());
 
-        rg = (RadioGroup)findViewById(R.id.radioGenderUpdate);
-        if(user.getUserGender().equalsIgnoreCase("male")){
+        rg = (RadioGroup) findViewById(R.id.radioGenderUpdate);
+        if (user.getUserGender().equalsIgnoreCase("male")) {
             rg.check(R.id.radioMale);
-        }else{
+        } else {
             rg.check(R.id.radioFemale);
         }
 
-        dobUpdate = (EditText)findViewById(R.id.editTextDOBUpdate);
-        if(!user.getUserDOB().equals("")){
+        dobUpdate = (EditText) findViewById(R.id.editTextDOBUpdate);
+        if (!user.getUserDOB().equals("")) {
             dobUpdate.setText(user.getUserDOB());
         }
 
-        aboutUpdate = (EditText)findViewById(R.id.editTextAboutUpdate);
-        if(!user.getUserAbout().equals("")){
+        aboutUpdate = (EditText) findViewById(R.id.editTextAboutUpdate);
+        if (!user.getUserAbout().equals("")) {
             aboutUpdate.setText(user.getUserAbout());
         }
 
     }
-
 
 
     public class PostTask extends AsyncTask<String, Void, String> {
@@ -118,10 +121,10 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         protected String doInBackground(String... urls) {
             try {
                 UserL2C newUser = new UserL2C(db.getUser(user_id).getfName(),
-                                                db.getUser(user_id).getlName(),
-                                                    user_id, db.getUser(user_id).getUserAbout(),
-                                                        db.getUser(user_id).getUserDOB(),
-                                                            db.getUser(user_id).getUserEmail(), db.getUser(user_id).getUserGender(), db.getUser(user_id).getUserLocation());
+                        db.getUser(user_id).getlName(),
+                        user_id, db.getUser(user_id).getUserAbout(),
+                        db.getUser(user_id).getUserDOB(),
+                        db.getUser(user_id).getUserEmail(), db.getUser(user_id).getUserGender(), db.getUser(user_id).getUserLocation());
 
 
                 Gson gson = new Gson();
@@ -138,7 +141,6 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
                 return response.toString();
 
 
-
             } catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -153,8 +155,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 //            Move to the main activity
-            Intent toSettings = new Intent(context, Settings.class);
-            startActivity(toSettings);
+            Intent toLikes = new Intent(context, Likes.class);
+            startActivity(toLikes);
             finish();
         }
     }
@@ -162,7 +164,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.updateNextButton){
+        if (v.getId() == R.id.updateNextButton) {
             try {
 //            Send the data to the local database
                 db = MySQLiteHelper.getInstance(getApplicationContext());
@@ -183,9 +185,9 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
                 db.updateUser(updateUser);
 
-                new PostTask(this).execute();
+                new NewProfile.PostTask(this).execute();
 
-            }catch(Exception e){
+            } catch (Exception e) {
                 Toast.makeText(this, "Error in field!" + e, Toast.LENGTH_LONG);
             }
         }
