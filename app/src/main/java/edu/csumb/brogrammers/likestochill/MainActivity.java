@@ -28,16 +28,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -86,21 +76,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Intent toUpdate = new Intent(this, MainActivity.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_gallery) {
-            Intent toUpdate = new Intent(this, UpdateProfile.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-            Intent toUpdate = new Intent(this, SearchPreferences.class);
-            startActivity(toUpdate);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.home) {
+            Intent toHome = new Intent(this, MainActivity.class);
+            startActivity(toHome);
+            this.finish();
+        } else if (id == R.id.myProfile) {
+            Intent toProfile = new Intent(this, Settings.class);
+            startActivity(toProfile);
+            this.finish();
+        } else if (id == R.id.searchPreferences) {
+            Intent toSearch = new Intent(this, SearchPreferences.class);
+            startActivity(toSearch);
+            this.finish();
+        } else if (id == R.id.addLikes) {
+            Intent toLikes = new Intent(this, ManageLikes.class);
+            startActivity(toLikes);
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
