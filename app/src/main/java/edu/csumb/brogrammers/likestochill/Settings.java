@@ -158,6 +158,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             Intent i = new Intent(this,SearchPreferences.class);
             startActivity(i);
         }else if(v.getId() == R.id.goToHomeButton){
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
             this.finish();
         }else if(v.getId() == R.id.goToUpdateProfile){
             Intent i = new Intent(this,UpdateProfile.class);
