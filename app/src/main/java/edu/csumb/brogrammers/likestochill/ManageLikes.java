@@ -57,6 +57,13 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
     }
 
     @Override
+    public void onBackPressed() {
+        Intent toMain = new Intent(this, MainActivity.class);
+        startActivity(toMain);
+        finish();
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         new GetMovies().execute();
