@@ -1,10 +1,11 @@
 package edu.csumb.brogrammers.likestochill;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,60 +30,29 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-/*
-*  frozen id: tt2294629
-*  fake rapunzel id: tt0398286
-*  barbie id: tt1092053
-*  sleepy lady id: tt0053285
-*
-*
-* */
-
-public class Likes extends AppCompatActivity implements OnItemClickListener, View.OnClickListener{
+public class ManageLikes extends AppCompatActivity implements OnItemClickListener, View.OnClickListener{
 
     okhttp3.OkHttpClient client;
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     Button addBtn;
     String user_id;
-    String [] movies;
     ListView listView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.likes);
+        setContentView(R.layout.manage_likes);
 
         addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(this);
 
-        user_id = getIntent().getStringExtra("user_id");
+        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        user_id = sharedPref.getString("user_id", "DEFAULT");
         //user_id = "1132758413445743";
 
-
-
-
         listView = (ListView) findViewById(R.id.listView);
-
-        //movies = getMovies();
         new GetMovies().execute();
-
-        /*
-        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.likes_list_item, R.id.movieTxt, movies);
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(Likes.this);
-*/
     }
-
-
-    public String[] getMovies() { // need another call to db here to populate listview
-
-        return new String[]{"1", "2", "3"};
-    }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,7 +69,7 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
             public void onClick(DialogInterface dialog, int which) {
                 new DeleteTask().execute();
 
-                Toast.makeText(Likes.this, "removed", Toast.LENGTH_LONG).show();
+                Toast.makeText(ManageLikes.this, "removed", Toast.LENGTH_LONG).show();
 
                 dialog.dismiss();
             }
@@ -117,9 +87,6 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
 
         AlertDialog alert = builder.create();
         alert.show();
-
-
-
     }
 
     @Override
@@ -139,15 +106,9 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         protected String doInBackground(String... urls) {
             try {
 
-//                String fName, String lName, int userId, String userAbout, String userDOB, String userEmail, String userGender, String userLocation
-
-                //User newUser = new User("ppppppppppp", "kkkkkkkkkkkk", 10, "mmmmmmmmmmmmm", "1994-10-10", "uuuuuuuu@csumb.edu", "M", "2016 - 10 - 27");
-
-                //String UserId, String MovieTitle
                 Movie newMovie = new Movie("1", "frozen");
                 Gson gson = new Gson();
                 String json = gson.toJson(newMovie);
-
 
                 client = new OkHttpClient();
                 okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
@@ -158,8 +119,6 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
                 okhttp3.Response response = client.newCall(request).execute();
                 return response.toString();
 
-
-
             } catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -169,16 +128,9 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            /*
-            TextView textView = (TextView) findViewById(R.id.myText);
-            textView.setText(s);*/
 
         }
-
-
-
     }
-
 
     public class GetMovies extends AsyncTask<String, Void, Movie[]> {
 
@@ -200,9 +152,7 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
                 Collection<Movie> movieListJson = gson.fromJson(result,collectionType);
                 Movie[] userListOBJ = movieListJson.toArray(new Movie[movieListJson.size()]);
 
-
                 return userListOBJ;
-
 
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -215,26 +165,15 @@ public class Likes extends AppCompatActivity implements OnItemClickListener, Vie
         protected void onPostExecute(Movie[] s) {
             super.onPostExecute(s);
 
-            //Toast.makeText(getApplicationContext(), s[1].getMovieTitle(), Toast.LENGTH_SHORT).show();
             String[] r = new String[s.length];
-
             for (int i =0; i < s.length; i++){
                 r[i] = s[i].getMovieTitle();
             }
 
-
-            ListAdapter adapter = new ArrayAdapter<String>(Likes.this, R.layout.likes_list_item, R.id.movieTxt, r);
-
+            ListAdapter adapter = new ArrayAdapter<String>(ManageLikes.this, R.layout.likes_list_item, R.id.movieTxt, r);
             ListView listView = (ListView) findViewById(R.id.listView);
             listView.setAdapter(adapter);
-
-            listView.setOnItemClickListener(Likes.this);
-
+            listView.setOnItemClickListener(ManageLikes.this);
         }
-
-
-
     }
-
-
 }

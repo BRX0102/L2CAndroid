@@ -1,6 +1,8 @@
 package edu.csumb.brogrammers.likestochill;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,19 +31,14 @@ import java.net.URL;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
-
-
 public class SearchForMovies extends AppCompatActivity implements OnClickListener{
     Button submitTitleBtn, submitIdBtn, likeBtn;
     TextView textViewOmdbResponse;
     EditText editTextMovieName, editTextMovieId;
     String url, title;
     ProgressDialog pd;
-
     String user_id;
-
     okhttp3.OkHttpClient client;
-
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
@@ -49,8 +46,9 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_for_movies);
 
-        user_id = getIntent().getStringExtra("user_id");
-
+        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        user_id = sharedPref.getString("user_id", "DEFAULT");
+        //user_id = "1132758413445743";
 
         submitTitleBtn = (Button) findViewById(R.id.submitTitleBtn);
         submitTitleBtn.setOnClickListener(this);
@@ -65,11 +63,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         textViewOmdbResponse = (TextView) findViewById(R.id.textViewOmdbResponse);
         editTextMovieName = (EditText) findViewById(R.id.editTextMovieName);
         editTextMovieId = (EditText) findViewById(R.id.editTextMovieId);
-
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -82,19 +76,17 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
             return;
         }
 
-
         if (v.getId() == R.id.submitTitleBtn)
             url = "http://www.omdbapi.com/?t=" + editTextMovieName.getText().toString() + "&type=movie&y=&plot=short&r=json";
         else if(v.getId() == R.id.submitIdBtn)
             url = "http://www.omdbapi.com/?i=" + editTextMovieId.getText().toString() + "&type=movie&y=&plot=short&r=json";
 
-
         new JsonTask().execute(url);
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
-
         protected void onPreExecute() {
+
             super.onPreExecute();
 
             pd = new ProgressDialog(SearchForMovies.this);
@@ -105,7 +97,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
         protected String doInBackground(String... params) {
 
-
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 
@@ -114,22 +105,17 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
-
                 InputStream stream = connection.getInputStream();
-
                 reader = new BufferedReader(new InputStreamReader(stream));
-
                 StringBuffer buffer = new StringBuffer();
                 String line = "";
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
                     Log.d("Response: ", "> " + line);
-
                 }
 
                 return buffer.toString();
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -168,16 +154,10 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
                 e.printStackTrace();
             }
 
-
-
-            //textViewOmdbResponse.setText(jsonResult);
             textViewOmdbResponse.setText(Html.fromHtml("<b>" + "Title: " + "</b>" + title + "<p><b>"
                     + "Year: " + "</b>" + year + "<p><b>" + "Plot: " + "</b>" + plot));
 
-
             likeBtn.setVisibility(View.VISIBLE);
-
-
         }
     }
 
@@ -188,16 +168,9 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         @Override
         protected String doInBackground(String... urls) {
             try {
-
                 Movie newMovie = new Movie(title, user_id);
-
-
-
-
-
                 Gson gson = new Gson();
                 String json = gson.toJson(newMovie);
-
 
                 client = new OkHttpClient();
                 okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
@@ -207,9 +180,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
                         .build();
                 okhttp3.Response response = client.newCall(request).execute();
                 return response.toString();
-//                return "it is working";
-
-
 
             } catch (Exception e) {
                 this.exception = e;
@@ -220,12 +190,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Likes Added", Toast.LENGTH_SHORT).show();
-
-
+            Toast.makeText(getApplicationContext(), "ManageLikes Added", Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 }

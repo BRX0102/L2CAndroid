@@ -5,18 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -156,7 +151,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
 
                 Toast.makeText(getApplicationContext(), "Welcome back", Toast.LENGTH_SHORT).show();
 
-                Intent toLikes = new Intent(context, Likes.class);
+                Intent toLikes = new Intent(context, ManageLikes.class);
                 startActivity(toLikes);
                 finish();
 
@@ -215,7 +210,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
 //            Move to the main activity
-            Intent toLikes = new Intent(context, Likes.class);
+            Intent toLikes = new Intent(context, ManageLikes.class);
             startActivity(toLikes);
             finish();
 
