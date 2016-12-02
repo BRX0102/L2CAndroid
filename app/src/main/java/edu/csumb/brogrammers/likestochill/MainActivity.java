@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MySQLiteHelper db;
     Button pre, nex;
     ViewSwitcher view;
-
+    private Toast backtoast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-        }
+                if(backtoast!=null&&backtoast.getView().getWindowToken()!=null) {
+                    finish();
+                } else
+                    backtoast = Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT);
+                    backtoast.show();
+                }
     }
 
     @Override

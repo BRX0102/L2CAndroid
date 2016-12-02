@@ -1,5 +1,6 @@
 package edu.csumb.brogrammers.likestochill;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,6 +40,13 @@ public class SearchPreferences extends AppCompatActivity implements AdapterView.
 
             this.finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent toMain = new Intent(this, MainActivity.class);
+        startActivity(toMain);
+        finish();
     }
 
     @Override

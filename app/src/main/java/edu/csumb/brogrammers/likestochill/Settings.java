@@ -103,6 +103,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent toMain = new Intent(this, MainActivity.class);
+        startActivity(toMain);
+        finish();
+    }
+
 //    public static Bitmap getFacebookProfilePicture(String userID) throws IOException{
 //        Log.d("PROFILEPICID", userID);
 //        URL imageURL = new URL("https://graph.facebook.com/" + "10154628186114814" + "/picture?type=large");
