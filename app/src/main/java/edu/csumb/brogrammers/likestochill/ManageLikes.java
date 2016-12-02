@@ -35,7 +35,7 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
     okhttp3.OkHttpClient client;
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     Button addBtn;
-    String user_id;
+    String user_id, movie_name;
     ListView listView;
 
     @Override
@@ -46,9 +46,9 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
         addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(this);
 
-        SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-        user_id = sharedPref.getString("user_id", "DEFAULT");
-        //user_id = "1132758413445743";
+        //SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        //user_id = sharedPref.getString("user_id", "DEFAULT");
+        user_id = "1132758413445743";
 
         listView = (ListView) findViewById(R.id.listView);
         new GetMovies().execute();
@@ -59,10 +59,11 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
 
         ViewGroup vg = (ViewGroup) view;
         TextView tv = (TextView) vg.findViewById(R.id.movieTxt);
+        movie_name = tv.getText().toString();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm");
-        builder.setMessage("Are you sure you want to remove " + tv.getText().toString() + "?");
+        builder.setMessage("Are you sure you want to remove " + movie_name + "?");
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
@@ -93,9 +94,8 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
     public void onClick(View v) {
 
         Intent toSearch = new Intent(getBaseContext(), SearchForMovies.class);
-        toSearch.putExtra("user_id", user_id);
         startActivity(toSearch);
-        //finish();
+        finish();
     }
 
     public class DeleteTask extends AsyncTask<String, Void, String> {
@@ -106,14 +106,14 @@ public class ManageLikes extends AppCompatActivity implements OnItemClickListene
         protected String doInBackground(String... urls) {
             try {
 
-                Movie newMovie = new Movie("1", "frozen");
+                Movie newMovie = new Movie(movie_name, user_id);
                 Gson gson = new Gson();
                 String json = gson.toJson(newMovie);
 
                 client = new OkHttpClient();
                 okhttp3.RequestBody body = okhttp3.RequestBody.create(JSON, json);
                 okhttp3.Request request = new okhttp3.Request.Builder()
-                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/deleteLike/")
+                        .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/deleteLike/" + user_id + "/" + movie_name)
                         .delete()
                         .build();
                 okhttp3.Response response = client.newCall(request).execute();

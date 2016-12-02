@@ -2,6 +2,7 @@ package edu.csumb.brogrammers.likestochill;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,9 +33,9 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 public class SearchForMovies extends AppCompatActivity implements OnClickListener{
-    Button submitTitleBtn, submitIdBtn, likeBtn;
+    Button submitTitleBtn, likeBtn, backBtn;
     TextView textViewOmdbResponse;
-    EditText editTextMovieName, editTextMovieId;
+    EditText editTextMovieName;
     String url, title;
     ProgressDialog pd;
     String user_id;
@@ -53,35 +54,37 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         submitTitleBtn = (Button) findViewById(R.id.submitTitleBtn);
         submitTitleBtn.setOnClickListener(this);
 
-        submitIdBtn = (Button) findViewById(R.id.submitIdBtn);
-        submitIdBtn.setOnClickListener(this);
-
         likeBtn = (Button) findViewById(R.id.likeBtn);
         likeBtn.setVisibility(View.INVISIBLE);
         likeBtn.setOnClickListener(this);
 
+        backBtn = (Button) findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(this);
+
         textViewOmdbResponse = (TextView) findViewById(R.id.textViewOmdbResponse);
         editTextMovieName = (EditText) findViewById(R.id.editTextMovieName);
-        editTextMovieId = (EditText) findViewById(R.id.editTextMovieId);
     }
 
     @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.likeBtn){
-            String liked = "Liked";
+            String liked = title + " added";
             new PostTask().execute();
             textViewOmdbResponse.setText(liked);
             likeBtn.setVisibility(View.INVISIBLE);
+            editTextMovieName.setText("");
             return;
         }
-
-        if (v.getId() == R.id.submitTitleBtn)
+        else if (v.getId() == R.id.backBtn){
+            Intent toManageLikes = new Intent(this, ManageLikes.class);
+            startActivity(toManageLikes);
+            finish();
+        }
+        else if (v.getId() == R.id.submitTitleBtn) {
             url = "http://www.omdbapi.com/?t=" + editTextMovieName.getText().toString() + "&type=movie&y=&plot=short&r=json";
-        else if(v.getId() == R.id.submitIdBtn)
-            url = "http://www.omdbapi.com/?i=" + editTextMovieId.getText().toString() + "&type=movie&y=&plot=short&r=json";
-
-        new JsonTask().execute(url);
+            new JsonTask().execute(url);
+        }
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
@@ -190,7 +193,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "ManageLikes Added", Toast.LENGTH_SHORT).show();
         }
     }
 }

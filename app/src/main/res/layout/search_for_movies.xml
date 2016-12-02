@@ -2,32 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
     <EditText
         android:id="@+id/editTextMovieName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/submitTitleBtn"
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:text="Submit Movie Title"/>
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/editTextMovieId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/submitTitleBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Submit Movie Title"/>
 
-    <Button
-        android:id="@+id/submitIdBtn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Submit IMDB Movie Id"/>
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="back"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewOmdbResponse"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/likeBtn"
