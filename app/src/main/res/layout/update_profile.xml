@@ -1,169 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     >
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/updateProfileHeader"
-        android:text="About Me"
-        android:textSize="25sp"
-        android:paddingBottom="15dp"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/firstNameUpdate"
-        android:text="First Name"
-        android:textSize="15sp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="First Name"
-        android:ems="10"
-        android:textSize="20sp"
-        android:id="@+id/editTextFirstNameUpdate" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/lastNameUpdate"
-        android:text="Last Name"
-        android:textSize="15sp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Last Name"
-        android:ems="10"
-        android:textSize="20sp"
-        android:id="@+id/editTextLastNameUpdate"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/locationUpdate"
-        android:text="Location"
-        android:textSize="15sp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="93933"
-        android:ems="10"
-        android:maxLength="5"
-        android:textSize="20sp"
-        android:id="@+id/editTextlocationUpdate"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/emailUpdate"
-        android:text="Email"
-        android:textSize="15sp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Example@email.swag"
-        android:ems="10"
-        android:textSize="20sp"
-        android:id="@+id/editTextEmailUpdate"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/genderUpdate"
-        android:textSize="15sp"
-        android:text="GENDER"
-        />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/radioGenderUpdate">
-
-        <RadioButton
-            android:text="Male"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radioMale"
-            android:layout_weight="1" />
-        <RadioButton
-            android:text="Female"
-            android:layout_width="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/updateProfileHeader"
+            android:text="About Me"
+            android:textSize="25sp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radioFemale"
-            android:layout_weight="1" />
-    </RadioGroup>
+            android:layout_gravity="left"
+            android:id="@+id/firstNameUpdate"
+            android:text="First Name"
+            android:textSize="15sp"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/dobUpdate"
-        android:textSize="15sp"
-        android:text="Date of Birth"
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="First Name"
+            android:ems="10"
+            android:textSize="20sp"
+            android:id="@+id/editTextFirstNameUpdate" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="20"
-        android:hint="18"
-        android:id="@+id/editTextDOBUpdate"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/lastNameUpdate"
+            android:text="Last Name"
+            android:textSize="15sp"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/aboutUpdate"
-        android:textSize="15sp"
-        android:text="User Summary"
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Last Name"
+            android:ems="10"
+            android:textSize="20sp"
+            android:id="@+id/editTextLastNameUpdate"
+            />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:hint="Why am I so beautiful? Everyone loves me. I'm so humble."
-        android:id="@+id/editTextAboutUpdate" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/locationUpdate"
+            android:text="Location"
+            android:textSize="15sp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="93933"
+            android:ems="10"
+            android:maxLength="5"
+            android:textSize="20sp"
+            android:id="@+id/editTextlocationUpdate"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/emailUpdate"
+            android:text="Email"
+            android:textSize="15sp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Example@email.swag"
+            android:ems="10"
+            android:textSize="20sp"
+            android:id="@+id/editTextEmailUpdate"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/genderUpdate"
+            android:textSize="15sp"
+            android:text="GENDER"
+            />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/radioGenderUpdate">
+
+            <RadioButton
+                android:text="Male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioMale"
+                android:layout_weight="1" />
+            <RadioButton
+                android:text="Female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioFemale"
+                android:layout_weight="1" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/dobUpdate"
+            android:textSize="15sp"
+            android:text="Date of Birth"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="20"
+            android:hint="18"
+            android:id="@+id/editTextDOBUpdate"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:id="@+id/aboutUpdate"
+            android:textSize="15sp"
+            android:text="User Summary"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:hint="Why am I so beautiful? Everyone loves me. I'm so humble."
+            android:id="@+id/editTextAboutUpdate" />
 
 
 
-    <Button
-        android:text="Update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateNextButton" />
+        <Button
+            android:text="Update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/updateNextButton" />
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
