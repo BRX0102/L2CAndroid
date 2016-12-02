@@ -38,4 +38,5 @@
     <string name="distancePreferences">Maximum Distance</string>
     <string name="distanceHintPreferences">5</string>
     <string name="distanceInMilesPreferences">Miles</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
