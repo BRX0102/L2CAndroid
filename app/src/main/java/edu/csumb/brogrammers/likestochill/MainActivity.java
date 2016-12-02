@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         pre = (Button) findViewById(R.id.prev);
         nex = (Button) findViewById(R.id.next);
 
+<<<<<<< HEAD
 
         view = (ViewSwitcher) findViewById(R.id.viewSwitcher1);
 
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
 
 
+=======
+>>>>>>> origin/master
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -115,8 +118,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
         if (id == R.id.home) {
             Intent toHome = new Intent(this, MainActivity.class);
             startActivity(toHome);
@@ -133,7 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent toLikes = new Intent(this, ManageLikes.class);
             startActivity(toLikes);
             this.finish();
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
