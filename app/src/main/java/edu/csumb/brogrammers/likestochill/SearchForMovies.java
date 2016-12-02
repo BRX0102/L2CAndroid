@@ -219,7 +219,7 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
                 Movie[] userMovieList = userLikeListJson.toArray(new Movie[userLikeListJson.size()]);
 
                 for (int i = 0; i < userMovieList.length; i++){
-                    if (userMovieList[i].getMovieTitle() == movieTitle) {
+                    if (userMovieList[i].getMovieTitle().equals(movieTitle)) {
                         return true;
                     }
                 }
@@ -239,8 +239,10 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
             if (s) {
 
+//                Toast.makeText(SearchForMovies.this, "Already liked", Toast.LENGTH_LONG).show();
                 Toast.makeText(SearchForMovies.this, "Already liked", Toast.LENGTH_LONG).show();
                 likeBtn.setVisibility(View.INVISIBLE);
+
 
             } else {
                 Toast.makeText(SearchForMovies.this, "You can like it", Toast.LENGTH_LONG).show();
