@@ -4,20 +4,13 @@
       <root url="jar://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/jars/classes.jar!/" />
       <root url="jar://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/jars/libs/internal_impl-25.0.0.jar!/" />
       <root url="file://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/res" />
-=======
-      <root url="file://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/jars/classes.jar!/" />
-      <root url="jar://$USER_HOME$/.android/build-cache/0107d09c227eee01506fcefd413270d7d1a37d78/output/jars/libs/internal_impl-25.0.0.jar!/" />
->>>>>>> 620b71dcb4b827dabe269548cfb9d5a9caf8d736
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-media-compat/25.0.0/support-media-compat-25.0.0-sources.jar!/" />
-      <root url="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-media-compat/25.0.0/support-media-compat-25.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         pre = (Button) findViewById(R.id.prev);
+        String no = "No chill";
+        pre.setText(no);
         nex = (Button) findViewById(R.id.next);
+        String yes = "Chill";
+        nex.setText(yes);
 
 
         view = (ViewSwitcher) findViewById(R.id.viewSwitcher1);
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View arg0) {
 
                 // Show Previous View
-                view.showPrevious();
+                view.showNext();
 
             }
         });
