@@ -2,6 +2,7 @@ package edu.csumb.brogrammers.likestochill;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
+import android.test.AndroidTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,9 +13,7 @@ import org.junit.runners.JUnit4;
 /**
  * Created by BRX01 on 11/14/2016.
  */
-@RunWith(JUnit4.class)
-public class MyDbHelperTest extends AndroidTestCase {
-    
+public class MyDbHelperTest extends AndroidTestCase{
     private MySQLiteHelper db;
     
     @Before
