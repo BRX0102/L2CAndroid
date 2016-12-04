@@ -7,7 +7,7 @@ import android.util.Log;
  * Created by BRX01 on 11/11/2016.
  */
 
-public class User extends Application {
+public class User {
     private String userId;
 
     private String fName;

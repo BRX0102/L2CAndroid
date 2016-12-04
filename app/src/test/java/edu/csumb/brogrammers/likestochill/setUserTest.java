@@ -6,29 +6,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by BRX01 on 11/11/2016.
+ * Created by Brian on 12/3/2016.
  */
 
-public class userTest {
+public class setUserTest {
     private User userTest;
     @Before
     public void create(){
         userTest = new User("1", "Sean", "O'Fallon", "93955", "sofallon@csumb.edu", "M", "2016-10-27", "About Sean");
-    }
-
-    @Test
-    public void getUserId() throws Exception {
-        Boolean idIs1 = false;
-        try{
-            if(userTest.getUserId().equals("1"))
-            {
-                idIs1=true;
-            }
-        }catch(Exception e){
-            idIs1=false;
-        }
-
-        assertTrue(idIs1);
     }
 
     @Test
@@ -46,5 +31,4 @@ public class userTest {
 
         assertTrue(idIs100);
     }
-
 }
