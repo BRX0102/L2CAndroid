@@ -1,5 +1,6 @@
 package edu.csumb.brogrammers.likestochill;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,11 @@ public class GetUserTest {
     @Before
     public void create(){
         userTest = new User("1", "Sean", "OFallon", "93955", "sofallon@csumb.edu", "M", "2016-10-27", "About Sean");
+    }
+
+    @Test
+    public void blankUser(){
+        User user = new User();
     }
 
     @Test
@@ -131,5 +137,10 @@ public class GetUserTest {
             about=false;
         }
         assertTrue(about);
+    }
+
+    @Test
+    public void toStringTest() throws Exception{
+        assertTrue(userTest.toString().equalsIgnoreCase(userTest.toString()));
     }
 }

@@ -17,117 +17,130 @@ public class SetL2CTest {
         userTest = new UserL2C("Sean", "OFallon", "1", "About Sean", "2016-10-27", "sofallon@csumb.edu", "M", "93955");
     }
     @Test
-    public void getUserId() throws Exception {
-        Boolean idIs1 = false;
+    public void setUserId() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserId().equals("1"))
+            userTest.setUserId("100");
+            if(userTest.getUserId().equals("100"))
             {
-                idIs1=true;
+                test=true;
             }
         }catch(Exception e){
-            idIs1=false;
+            test=false;
         }
 
-        assertTrue(idIs1);
+        assertTrue(test);
     }
 
     @Test
-    public void getFirstName() throws Exception{
-        Boolean name = false;
+    public void setFirstName() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getfName().equals("Sean"))
+            userTest.setfName("Chet");
+            if(userTest.getfName().equals("Chet"))
             {
-                name=true;
+                test=true;
             }
         }catch(Exception e){
-            name=false;
+            test=false;
         }
 
-        assertTrue(name);
+        assertTrue(test);
     }
 
     @Test
-    public void getLastName() throws Exception{
-        Boolean name = false;
+    public void setLastName() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getlName().equals("OFallon"))
+            userTest.setlName("Aria");
+            if(userTest.getlName().equals("Aria"))
             {
-                name=true;
+                test=true;
             }
         }catch(Exception e){
-            name=false;
+            test=false;
         }
 
-        assertTrue(name);
+        assertTrue(test);
     }
 
     @Test
-    public void getLocation() throws Exception{
-        Boolean location = false;
+    public void setLocation() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserLocation().equals("93955"))
+            userTest.setUserLocation("93933");
+            if(userTest.getUserLocation().equals("93933"))
             {
-                location=true;
+                test=true;
             }
         }catch(Exception e){
-            location=false;
+            test=false;
         }
-        assertTrue(location);
+
+        assertTrue(test);
     }
 
     @Test
-    public void getEmail() throws Exception{
-        Boolean email = false;
+    public void setEmail() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserEmail().equals("sofallon@csumb.edu"))
+            userTest.setUserEmail("aaria@csumb.edu");
+            if(userTest.getUserEmail().equals("aaria@csumb.edu"))
             {
-                email=true;
+                test=true;
             }
         }catch(Exception e){
-            email=false;
+            test=false;
         }
-        assertTrue(email);
+
+        assertTrue(test);
     }
 
     @Test
-    public void getGender() throws Exception{
-        Boolean gender = false;
+    public void setGender() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserGender().equals("M"))
+            userTest.setUserGender("F");
+            if(userTest.getUserGender().equals("F"))
             {
-                gender=true;
+                test=true;
             }
         }catch(Exception e){
-            gender=false;
+            test=false;
         }
-        assertTrue(gender);
+
+        assertTrue(test);
     }
 
     @Test
-    public void getDOB() throws Exception{
-        Boolean dob = false;
+    public void setDOB() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserDOB().equals("2016-10-27"))
+            userTest.setUserDOB("2016-12-03");
+            if(userTest.getUserDOB().equals("2016-12-03"))
             {
-                dob=true;
+                test=true;
             }
         }catch(Exception e){
-            dob=false;
+            test=false;
         }
-        assertTrue(dob);
+
+        assertTrue(test);
     }
 
     @Test
-    public void getAbout() throws Exception{
-        Boolean about = false;
+    public void setAbout() throws Exception {
+        Boolean test = false;
         try{
-            if(userTest.getUserAbout().equals("About Sean"))
+            userTest.setUserAbout("Beautiful");
+            if(userTest.getUserAbout().equals("Beautiful"))
             {
-                about=true;
+                test=true;
             }
         }catch(Exception e){
-            about=false;
+            test=false;
         }
-        assertTrue(about);
+
+        assertTrue(test);
     }
 }

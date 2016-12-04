@@ -131,4 +131,9 @@ public class GetL2CTest {
         }
         assertTrue(about);
     }
+
+    @Test
+    public void toStringTest() throws Exception{
+        assertTrue(userTest.toString().equalsIgnoreCase(userTest.toString()));
+    }
 }

@@ -18,12 +18,8 @@ public class User {
     private String userGender;
     private String userDOB;
     private String userAbout;
-    private String userSignupDate;
 
-
-
-
-    public User() {
+    public User(){
 
     }
 
@@ -111,14 +107,6 @@ public class User {
 
     public void setUserAbout(String userAbout) {
         this.userAbout = userAbout;
-    }
-
-    public String getUserSignupDate() {
-        return userSignupDate;
-    }
-
-    public void setUserSignupDate(String userSignupDate) {
-        this.userSignupDate = userSignupDate;
     }
 
     @Override
