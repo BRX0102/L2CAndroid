@@ -6,11 +6,13 @@ import android.test.AndroidTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Created by BRX01 on 11/14/2016.
  */
-
+@RunWith(JUnit4.class)
 public class MyDbHelperTest extends AndroidTestCase {
     
     private MySQLiteHelper db;
