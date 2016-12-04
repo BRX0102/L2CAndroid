@@ -1,17 +1,16 @@
 package edu.csumb.brogrammers.likestochill;
 
-import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import static org.junit.Assert.assertTrue;
+import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by Brian on 12/3/2016.
+ * Created by Brian on 12/4/2016.
  */
-@RunWith(AndroidJUnit4.class)
+@RunWith(JUnit4.class)
 public class GetUserTest {
     private User userTest;
     @Before
