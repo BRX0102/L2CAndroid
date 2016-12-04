@@ -18,17 +18,129 @@ public class setUserTest {
 
     @Test
     public void setUserId() throws Exception {
-        Boolean idIs100 = false;
+        Boolean test = false;
         try{
             userTest.setUserId("100");
             if(userTest.getUserId().equals("100"))
             {
-                idIs100=true;
+                test=true;
             }
         }catch(Exception e){
-            idIs100=false;
+            test=false;
         }
 
-        assertTrue(idIs100);
+        assertTrue(test);
+    }
+
+    @Test
+    public void setFirstName() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setfName("Chet");
+            if(userTest.getfName().equals("Chet"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setLastName() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setlName("Aria");
+            if(userTest.getlName().equals("Aria"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setLocation() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setUserLocation("93933");
+            if(userTest.getUserLocation().equals("93933"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setEmail() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setUserEmail("aaria@csumb.edu");
+            if(userTest.getUserEmail().equals("aaria@csumb.edu"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setGender() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setUserGender("F");
+            if(userTest.getUserGender().equals("F"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setDOB() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setUserDOB("2016-12-03");
+            if(userTest.getUserDOB().equals("2016-12-03"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
+    }
+
+    @Test
+    public void setAbout() throws Exception {
+        Boolean test = false;
+        try{
+            userTest.setUserAbout("Beautiful");
+            if(userTest.getUserAbout().equals("Beautiful"))
+            {
+                test=true;
+            }
+        }catch(Exception e){
+            test=false;
+        }
+
+        assertTrue(test);
     }
 }
