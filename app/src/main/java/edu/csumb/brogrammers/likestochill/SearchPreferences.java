@@ -35,9 +35,6 @@ public class SearchPreferences extends AppCompatActivity implements AdapterView.
             maxPref = (EditText)findViewById(R.id.ageMaxPreferences);
             genderPref = (Spinner)findViewById(R.id.preferenceGender);
 
-
-
-
             this.finish();
         }
     }

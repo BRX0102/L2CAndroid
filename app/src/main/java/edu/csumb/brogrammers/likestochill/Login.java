@@ -41,15 +41,11 @@ import okhttp3.Request;
 
 public class Login extends AppCompatActivity {
 
-    String name;
     TextView mTextDetails;
-    Context context;
     LoginButton loginButton;
     AccessToken accessToken;
     private CallbackManager mCallbackManager;
     private MySQLiteHelper db;
-    Button button3;
-    TextView mTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -68,28 +64,20 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
-
     }
-
 
     public class getIfExists extends AsyncTask<Void, Void, Boolean> {
 
         private Exception exception;
-
         String userId;
-
         private getIfExists(String userId) {
             this.userId = userId;
         }
-
 
         @Override
         protected Boolean doInBackground(Void... voids) {
 
             try {
-
-
 
                 okhttp3.OkHttpClient client = new OkHttpClient();
                 okhttp3.Request request = new Request.Builder()
@@ -109,10 +97,6 @@ public class Login extends AppCompatActivity {
                     return false;
                 }
 
-
-
-
-
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
@@ -125,12 +109,10 @@ public class Login extends AppCompatActivity {
             super.onPostExecute(s);
 
             if (s) {
-
                 Toast.makeText(getApplicationContext(), "Welcome back", Toast.LENGTH_SHORT).show();
 
                 Intent toLikes = new Intent(Login.this, MainActivity.class);
                 startActivity(toLikes);
-
 
             } else {
 
@@ -138,11 +120,8 @@ public class Login extends AppCompatActivity {
                 startActivity(toLikes);
 
             }
-
-
         }
     }
-
 
     private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
         @Override
@@ -181,16 +160,11 @@ public class Login extends AppCompatActivity {
                                 editor.putString("user_id", object.getString("id"));
                                 editor.apply();
 
-
-//                                Intent toUpdate = new Intent(Login.this, MainActivity.class);
-//                                startActivity(toUpdate);
-
                                 new getIfExists(object.getString("id")).execute();
 
 
                             } catch (JSONException e) {
                                 Log.d("LOGINERROR", e.toString());
-                                // Do something to recover ... or kill the app.
                             }
                         }
                     });
@@ -202,12 +176,10 @@ public class Login extends AppCompatActivity {
 
         @Override
         public void onCancel() {
-
         }
 
         @Override
         public void onError(FacebookException error) {
-
         }
     };
 
@@ -230,19 +202,10 @@ public class Login extends AppCompatActivity {
             startActivity(toMain);
             this.finish();
         }
-
-
-            /*Intent toUpdate = new Intent(Login.this, TempLogout.class);
-            startActivity(toUpdate);*/
-
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
-
 }

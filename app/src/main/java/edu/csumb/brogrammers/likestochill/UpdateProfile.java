@@ -13,15 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.Collection;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 /**
  * Created by BRX01 on 11/11/2016.
@@ -33,19 +27,16 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
     String user_id;
     private MySQLiteHelper db;
 
-
     okhttp3.OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
 
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
 
-//        new JSONFeedArrayTask().execute();
-
         db = MySQLiteHelper.getInstance(getApplicationContext());
+
         Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             user_id = getIntent().getExtras().getString("user_id");
@@ -57,7 +48,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
-//        Show the user information
+        // Show the user information
         User user = db.getUser(user_id);
 
         SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -95,12 +86,7 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         if(!user.getUserAbout().equals("")){
             aboutUpdate.setText(user.getUserAbout());
         }
-
-
-
     }
-
-
 
     public class PostTask extends AsyncTask<String, Void, String> {
 
@@ -134,8 +120,6 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
                 okhttp3.Response response = client.newCall(request).execute();
                 return response.toString();
 
-
-
             } catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -146,10 +130,8 @@ public class UpdateProfile extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-//            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
-//            Move to the main activity
             Intent toSettings = new Intent(context, Settings.class);
             startActivity(toSettings);
             finish();

@@ -1,6 +1,5 @@
 package edu.csumb.brogrammers.likestochill;
 
-
 public class Movie {
 
     private String movieTitle;

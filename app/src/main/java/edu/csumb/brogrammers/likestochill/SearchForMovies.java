@@ -53,7 +53,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
         SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
         user_id = sharedPref.getString("user_id", "DEFAULT");
-        //user_id = "1132758413445743";
 
         submitTitleBtn = (Button) findViewById(R.id.submitTitleBtn);
         submitTitleBtn.setOnClickListener(this);
@@ -96,9 +95,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         else if (v.getId() == R.id.submitTitleBtn) {
             url = "http://www.omdbapi.com/?t=" + editTextMovieName.getText().toString() + "&type=movie&y=&plot=short&r=json";
             new JsonTask().execute(url);
-
-
-
         }
     }
 
@@ -177,9 +173,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
             new getIfExists(user_id,title).execute();
 
-
-
-
         }
     }
 
@@ -201,9 +194,6 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
         protected Boolean doInBackground(Void... voids) {
 
             try {
-
-
-
                 okhttp3.OkHttpClient client = new OkHttpClient();
                 okhttp3.Request request = new Request.Builder()
                         .url("http://lowcost-env.8jm8a7kdcg.us-west-2.elasticbeanstalk.com/webapi/movies/"+userId)
@@ -239,13 +229,11 @@ public class SearchForMovies extends AppCompatActivity implements OnClickListene
 
             if (s) {
 
-//                Toast.makeText(SearchForMovies.this, "Already liked", Toast.LENGTH_LONG).show();
                 Toast.makeText(SearchForMovies.this, "Already liked", Toast.LENGTH_LONG).show();
                 likeBtn.setVisibility(View.INVISIBLE);
 
 
             } else {
-                Toast.makeText(SearchForMovies.this, "You can like it", Toast.LENGTH_LONG).show();
                 likeBtn.setVisibility(View.VISIBLE);
             }
         }

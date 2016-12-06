@@ -6,7 +6,6 @@ package edu.csumb.brogrammers.likestochill;
 
 public class UserL2C {
 
-
     /**
      * fName : Sean
      * lName : O'Fallon
@@ -15,7 +14,6 @@ public class UserL2C {
      * userGender : M
      * userLocation : 93955
      */
-
 
     private String fName;
     private String lName;

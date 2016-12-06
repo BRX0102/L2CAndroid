@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -15,18 +13,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.Collection;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 /**
  * Created by Brian on 12/1/2016.
@@ -39,7 +29,6 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
     String user_id;
     private MySQLiteHelper db;
 
-
     okhttp3.OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -47,8 +36,6 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
-
-//        new JSONFeedArrayTask().execute();
 
         db = MySQLiteHelper.getInstance(getApplicationContext());
         Bundle extras = getIntent().getExtras();
@@ -62,7 +49,7 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
         View updateButton = findViewById(R.id.updateNextButton);
         updateButton.setOnClickListener(this);
 
-//        Show the user information
+        // Show the user information
         User user = db.getUser(user_id);
 
         SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -151,10 +138,8 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-//            Toast.makeText(getApplicationContext(), s.toString(), Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Added User Successfully", Toast.LENGTH_SHORT).show();
 
-//            Move to the main activity
             Intent toSettings = new Intent(context, Settings.class);
             startActivity(toSettings);
             finish();
@@ -166,7 +151,7 @@ public class NewProfile extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         if (v.getId() == R.id.updateNextButton) {
             try {
-//            Send the data to the local database
+                // Send the data to the local database
                 db = MySQLiteHelper.getInstance(getApplicationContext());
 
                 firstNameUpdate = (EditText) findViewById(R.id.editTextFirstNameUpdate);

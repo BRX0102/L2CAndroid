@@ -1,8 +1,5 @@
 package edu.csumb.brogrammers.likestochill;
 
-import android.app.Application;
-import android.util.Log;
-
 /**
  * Created by BRX01 on 11/11/2016.
  */
